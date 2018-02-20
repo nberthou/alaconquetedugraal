@@ -1,22 +1,63 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Nicolas
+ * UserType: Nicolas
  * Date: 20/02/2018
- * Time: 09:21
+ * Time: 15:56
  */
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 
-class User
+/**
+ * Class UserType
+ * @package App\Entity
+ * @ORM\Entity
+ * @UniqueEntity(fields="email", message="Adresse mail déjà prise.")
+ * @UniqueEntity(fields="pseudo", message="Pseudo déjà pris.")
+ */
+class User implements UserInterface
 {
-    protected $id;
-    protected $pseudo;
-    protected $mdp;
-    protected $email;
-    protected $is_admin;
-    protected $parties_jouees;
+
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     * @Assert\NotBlank()
+     */
+    private $pseudo;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Email()
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     */
+    private $mdp;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $parties_jouees;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $is_admin;
 
     /**
      * @return mixed
@@ -53,22 +94,6 @@ class User
     /**
      * @return mixed
      */
-    public function getMdp()
-    {
-        return $this->mdp;
-    }
-
-    /**
-     * @param mixed $mdp
-     */
-    public function setMdp($mdp)
-    {
-        $this->mdp = $mdp;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getEmail()
     {
         return $this->email;
@@ -85,17 +110,17 @@ class User
     /**
      * @return mixed
      */
-    public function getisAdmin()
+    public function getMdp()
     {
-        return $this->is_admin;
+        return $this->mdp;
     }
 
     /**
-     * @param mixed $is_admin
+     * @param mixed $mdp
      */
-    public function setIsAdmin($is_admin)
+    public function setMdp($mdp)
     {
-        $this->is_admin = $is_admin;
+        $this->mdp = $mdp;
     }
 
     /**
@@ -114,5 +139,44 @@ class User
         $this->parties_jouees = $parties_jouees;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getisAdmin()
+    {
+        return $this->is_admin;
+    }
 
+    /**
+     * @param mixed $is_admin
+     */
+    public function setIsAdmin($is_admin)
+    {
+        $this->is_admin = $is_admin;
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function getPassword()
+    {
+        return $this->getMdp();
+    }
+
+    public function getRoles()
+    {
+        return null;
+    }
+
+    public function getUsername()
+    {
+        return $this->getPseudo();
+    }
+
+    public function eraseCredentials()
+    {
+        return null;
+    }
 }

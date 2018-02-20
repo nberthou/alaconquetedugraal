@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+<ul>
+    <li><a href="{{ path('index') }}">Accueil</a></li>
+    <li><a href="{{ path('profil') }}">Profil</a></li>
+    <li><a href="{{ path('login') }}">Login</a></li>
+</ul>
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    <script src="{{ asset('js/bootstrap.js') }}"></script>
+    </body>
+</html>

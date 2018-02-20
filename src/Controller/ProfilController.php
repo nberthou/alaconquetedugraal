@@ -55,4 +55,12 @@ class ProfilController extends Controller
 
         return $this->render('inscription.html.twig', array('form' => $form->createView()));
     }
+
+    /**
+     * @Route("/connexion", name="connexion")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function connexion() {
+        return $this->render('connexion.html.twig');
+    }
 }

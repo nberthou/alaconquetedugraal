@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * UserType: Nicolas
+ * InscriptionType: Nicolas
  * Date: 20/02/2018
  * Time: 16:30
  */
@@ -14,21 +14,23 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserType extends AbstractType
+class InscriptionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
         $builder->add('pseudo', TextType::class)
             ->add('email', EmailType::class)
-            ->add('mdp', PasswordType::class)
+            ->add('mdp', RepeatedType::class, array('type' => PasswordType::class, 'first_options' => ['label' => 'Mot de passe'], 'second_options' => ['label' => 'Répétez le mot de passe']))
             ->add('parties_jouees', HiddenType::class,array('empty_data' => 0))
             ->add('is_admin', HiddenType::class, array('empty_data' => false))
+            ->add('parties_gagnees', HiddenType::class, array('empty_data' => 0))
             ->add('submit', SubmitType::class);
     }
 

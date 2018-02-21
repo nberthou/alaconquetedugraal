@@ -19,9 +19,11 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class ProfilController extends Controller
 {
@@ -39,12 +41,16 @@ class ProfilController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function inscription(Request $request) {
+    public function inscription(Request $request, UserPasswordEncoderInterface $encoder) {
         $user = new User();
 
         $form  = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
+
+            $pass = $user->getMdp();
+            $mdp = $encoder->encodePassword($user, $pass);
+            $user->setMdp($mdp);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
@@ -54,5 +60,30 @@ class ProfilController extends Controller
         }
 
         return $this->render('inscription.html.twig', array('form' => $form->createView()));
+    }
+
+    /**
+     * @Route("/connexion", name="connexion")
+     * @param Request $request
+     * @param AuthenticationUtils $authUtils
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function connexion(Request $request, AuthenticationUtils $authUtils) {
+        $lastUsername = $authUtils->getLastUsername();
+        $error = $authUtils->getLastAuthenticationError();
+
+        return $this->render('connexion.html.twig', array(
+            'last_username' => $lastUsername,
+            'error' => $error,
+        ));
+    }
+
+    /**
+     * @Route("/admin", name="admin")
+     * @return Response
+     */
+    public function admin()
+    {
+        return new Response('cc');
     }
 }

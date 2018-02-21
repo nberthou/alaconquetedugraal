@@ -29,6 +29,7 @@ class UserType extends AbstractType
             ->add('mdp', PasswordType::class)
             ->add('parties_jouees', HiddenType::class,array('empty_data' => 0))
             ->add('is_admin', HiddenType::class, array('empty_data' => false))
+            ->add('parties_gagnees', HiddenType::class, array('empty_data' => 0))
             ->add('submit', SubmitType::class);
     }
 

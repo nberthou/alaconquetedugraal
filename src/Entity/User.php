@@ -9,6 +9,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -49,6 +50,10 @@ class User implements UserInterface
      */
     private $mdp;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $parties_gagnees;
     /**
      * @ORM\Column(type="integer")
      */
@@ -179,4 +184,26 @@ class User implements UserInterface
     {
         return null;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPartiesGagnees()
+    {
+        return $this->parties_gagnees;
+    }
+
+    /**
+     * @param mixed $parties_gagnees
+     */
+    public function setPartiesGagnees($parties_gagnees)
+    {
+        $this->parties_gagnees = $parties_gagnees;
+    }
+
+
+
+
+
+
 }

@@ -1,3 +1,4 @@
 easy_admin:
+   disabled_actions: ['new']
    entities:
-       - App\Entity\User
+        - App\Entity\User

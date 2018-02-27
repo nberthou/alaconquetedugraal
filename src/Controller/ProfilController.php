@@ -10,7 +10,6 @@ namespace App\Controller;
 
 
 use App\Entity\User;
-use App\Form\ConnexionType;
 use App\Form\InscriptionType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -72,22 +71,11 @@ class ProfilController extends Controller
     public function connexion(Request $request, AuthenticationUtils $authUtils) {
         $lastUsername = $authUtils->getLastUsername();
         $error = $authUtils->getLastAuthenticationError();
-        $form = $this->createForm(ConnexionType::class, [
-            'pseudo' => $lastUsername,
-        ]);
 
         return $this->render('connexion.html.twig', array(
-            'form' => $form->createView(),
+            'last_username' => $lastUsername,
             'error' => $error,
         ));
     }
 
-    /**
-     * @Route("/admin", name="admin")
-     * @return Response
-     */
-    public function admin()
-    {
-        return new Response('cc');
-    }
 }

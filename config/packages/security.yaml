@@ -15,12 +15,9 @@ security:
             anonymous: ~
             http_basic: ~
             provider: our_db_provider
-            form_login:
-              login_path: connexion
-              check_path: connexion
-              default_target_path: profil
-              username_parameter: pseudo
-              password_parameter: mdp
+            guard:
+              authenticators:
+                - app.security.login_form_authenticator
 
             # activate different ways to authenticate
 

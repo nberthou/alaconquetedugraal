@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * UserType: Nicolas
+ * InscriptionType: Nicolas
  * Date: 20/02/2018
  * Time: 16:30
  */
@@ -19,7 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserType extends AbstractType
+class InscriptionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

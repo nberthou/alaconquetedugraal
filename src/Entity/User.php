@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * UserType: Nicolas
+ * InscriptionType: Nicolas
  * Date: 20/02/2018
  * Time: 15:56
  */
@@ -15,7 +15,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * Class UserType
+ * Class InscriptionType
  * @package App\Entity
  * @ORM\Entity
  * @UniqueEntity(fields="email", message="Adresse mail déjà prise.")
@@ -172,7 +172,7 @@ class User implements UserInterface
 
     public function getRoles()
     {
-        return null;
+        return ['ROLE_USER'];
     }
 
     public function getUsername()

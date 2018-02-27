@@ -10,7 +10,8 @@ namespace App\Controller;
 
 
 use App\Entity\User;
-use App\Form\UserType;
+use App\Form\ConnexionType;
+use App\Form\InscriptionType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -44,7 +45,7 @@ class ProfilController extends Controller
     public function inscription(Request $request, UserPasswordEncoderInterface $encoder) {
         $user = new User();
 
-        $form  = $this->createForm(UserType::class, $user);
+        $form  = $this->createForm(InscriptionType::class, $user);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
 
@@ -71,9 +72,12 @@ class ProfilController extends Controller
     public function connexion(Request $request, AuthenticationUtils $authUtils) {
         $lastUsername = $authUtils->getLastUsername();
         $error = $authUtils->getLastAuthenticationError();
+        $form = $this->createForm(ConnexionType::class, [
+            'pseudo' => $lastUsername,
+        ]);
 
         return $this->render('connexion.html.twig', array(
-            'last_username' => $lastUsername,
+            'form' => $form->createView(),
             'error' => $error,
         ));
     }

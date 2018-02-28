@@ -10,9 +10,15 @@
 <ul>
     <li><a href="{{ path('index') }}">Accueil</a></li>
     <li><a href="{{ path('profil') }}">Profil</a></li>
-    <li><a href="{{ path('inscription') }}">Inscription</a></li>
-    <li><a href="{{ path('connexion') }}">Connexion</a></li>
-    <li><a href="{{ path('admin') }}">Admin</a></li>
+    {% if not app.user %}
+        <li><a href="{{ path('inscription') }}">Inscription</a></li>
+        <li><a href="{{ path('connexion') }}">Connexion</a></li>
+    {% elseif app.user %}
+        <li><a href="{{ logout_path() }}">Déconnexion</a></li>
+        {% if is_granted('ROLE_ADMIN') %}
+        <li><a href="{{ path('admin') }}">Admin</a></li>
+            {% endif %}
+    {% endif %}
 </ul>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}

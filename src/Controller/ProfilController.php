@@ -10,6 +10,7 @@ namespace App\Controller;
 
 
 use App\Entity\User;
+use App\Form\ConnexionType;
 use App\Form\InscriptionType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -33,7 +34,8 @@ class ProfilController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction() {
-        return $this->render('Profil/profil.html.twig');
+        $user = $this->getUser();
+        return $this->render('Profil/profil.html.twig', array('user' => $user));
     }
 
     /**
@@ -73,9 +75,16 @@ class ProfilController extends Controller
         $error = $authUtils->getLastAuthenticationError();
 
         return $this->render('connexion.html.twig', array(
-            'last_username' => $lastUsername,
+            'username' => $lastUsername,
             'error' => $error,
         ));
+    }
+
+    /**
+     * @Route("/deconnexion", name="deconnexion")
+     */
+    public function deconnexion() {
+
     }
 
 

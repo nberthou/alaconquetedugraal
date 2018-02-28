@@ -54,15 +54,18 @@ class User implements UserInterface
      * @ORM\Column(type="integer")
      */
     private $parties_gagnees;
+
     /**
      * @ORM\Column(type="integer")
      */
     private $parties_jouees;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="json_array")
+     * @var array
      */
-    private $is_admin;
+    private $roles = array();
+
 
     /**
      * @return mixed
@@ -147,19 +150,6 @@ class User implements UserInterface
     /**
      * @return mixed
      */
-    public function getisAdmin()
-    {
-        return $this->is_admin;
-    }
-
-    /**
-     * @param mixed $is_admin
-     */
-    public function setIsAdmin($is_admin)
-    {
-        $this->is_admin = $is_admin;
-    }
-
     public function getSalt()
     {
         return null;
@@ -172,12 +162,25 @@ class User implements UserInterface
 
     public function getRoles()
     {
-        return null;
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    /**
+     * @param $roles
+     * @return $this
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+        return $this;
     }
 
     public function getUsername()
     {
-        return $this->getPseudo();
+        return $this->pseudo;
     }
 
     public function eraseCredentials()

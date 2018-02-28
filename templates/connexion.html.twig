@@ -8,6 +8,9 @@
 
     <h1>Login</h1>
 
-
-
+    <form method="post" action="{{ path('profil') }}">
+    <input type="text" name="_username" placeholder="Pseudo">
+    <input type="password" name="_password" placeholder="Mot de passe">
+    <input type="submit" value="Se connecter">
+    </form>
 {% endblock  %}

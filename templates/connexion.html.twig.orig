@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<<<<<<< HEAD
+
+
+    <h1>Login</h1>
+
+    {% if error %}
+        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    {{ form_start(form) }}
+        {{ form_row(form.pseudo, {'label' : 'Pseudo'} ) }}
+        {{ form_row(form.mdp, {'label' : 'Mot de passe'}) }}
+    <button type="submit" class="btn btn-danger">Se connecter</button>
+    {{ form_end(form) }}
+=======
+    {% if error %}
+        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    <h1>Login</h1>
+
+>>>>>>> 8dafb17224ecffdb35aa9d3e9566beb5e06c028d
+
+
+{% endblock  %}

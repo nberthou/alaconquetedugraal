@@ -1,29 +1,35 @@
 {% extends 'base.html.twig' %}
 
+
 {% block body %}
 
+
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+
 <<<<<<< HEAD
-
-
-    <h1>Login</h1>
-
-    {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
-
-    {{ form_start(form) }}
-        {{ form_row(form.pseudo, {'label' : 'Pseudo'} ) }}
-        {{ form_row(form.mdp, {'label' : 'Mot de passe'}) }}
-    <button type="submit" class="btn btn-danger">Se connecter</button>
-    {{ form_end(form) }}
-=======
-    {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
-
-    <h1>Login</h1>
-
->>>>>>> 8dafb17224ecffdb35aa9d3e9566beb5e06c028d
-
-
+    <form method="post" action="{{ path('profil') }}">
+    <input type="text" name="_username" placeholder="Pseudo">
+    <input type="password" name="_password" placeholder="Mot de passe">
+    <input type="submit" value="Se connecter">
+    </form>
 {% endblock  %}
+=======
+        <h1>Login</h1>
+
+            <form action="{{ path('connexion') }}" method="post">
+                <div class="form-group">
+                    <input type="text" name="_username" id="pseudo" class="form-control" value="{{ username }}" placeholder="Pseudo">
+                </div>
+
+                <div class="form-group">
+                    <input type="password" name="_password" id="mdp" class="form-control" placeholder="Mot de passe" >
+                </div>
+
+                <button class="btn btn-success pull-right">Se connecter</button>
+            </form>
+{% endblock  %}
+>>>>>>> 8a40269f22ba8ded99629b5a244038b3c480090c

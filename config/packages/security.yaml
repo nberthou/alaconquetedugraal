@@ -18,6 +18,10 @@ security:
             form_login:
               login_path: connexion
               check_path: connexion
+            logout:
+              path: deconnexion
+              target: index
+
     access_control:
          - { path: ^/admin, roles: ROLE_ADMIN }
 #        - { path: ^/profil, roles: ROLE_USER }

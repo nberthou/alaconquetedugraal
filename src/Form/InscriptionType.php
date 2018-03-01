@@ -29,7 +29,6 @@ class InscriptionType extends AbstractType
             ->add('email', EmailType::class)
             ->add('mdp', RepeatedType::class, array('type' => PasswordType::class, 'first_options' => ['label' => 'Mot de passe'], 'second_options' => ['label' => 'Répétez le mot de passe']))
             ->add('parties_jouees', HiddenType::class,array('empty_data' => 0))
-            ->add('is_admin', HiddenType::class, array('empty_data' => false))
             ->add('parties_gagnees', HiddenType::class, array('empty_data' => 0))
             ->add('submit', SubmitType::class);
     }

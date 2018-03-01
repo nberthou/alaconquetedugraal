@@ -23,4 +23,9 @@
 
                 <button class="btn btn-success pull-right">Se connecter</button>
             </form>
+<<<<<<< HEAD
+    <a href=""></a>
 {% endblock  %}
+=======
+{% endblock  %}
+>>>>>>> e5ba83f4072812998e24e94bb8301e4d9da1c0da

@@ -68,6 +68,19 @@ class User implements UserInterface
 
 
     /**
+     * @ORM\Column(type="json_array"))
+     * @var array
+     */
+    private $amis = array();
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @var boolean
+     */
+    private $banned;
+
+
+    /**
      * @return mixed
      */
     public function getId()

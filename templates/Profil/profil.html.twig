@@ -31,4 +31,24 @@
         </div>
     </form>
 
+
+    {{ user.amis }}
+    <h1>Ajouter un joueur en ami</h1>
+    {#<form action="{{ path('ajout_ami') }}" method="post">#}
+        {#<select name="ami">#}
+            {#<option value="">Choisir</option>#}
+            {#{% for joueur in joueurs %}#}
+                {#<option value="{{ joueur.id }}">{{ joueur.pseudo }}</option>#}
+            {#{% endfor %}#}
+        {#</select>#}
+        {#<input type="submit" value="Ajouter en ami" onclick="ajaxCall()">#}
+    {#</form>#}
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+
+    </script>
+
 {% endblock %}

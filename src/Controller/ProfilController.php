@@ -36,7 +36,8 @@ class ProfilController extends Controller
      */
     public function indexAction() {
         $user = $this->getUser();
-        return $this->render('Profil/profil.html.twig', array('user' => $user));
+        $joueurs = $this->getDoctrine()->getRepository(User::class)->findAll();
+        return $this->render('Profil/profil.html.twig', array('user' => $user, 'joueurs' => $joueurs));
     }
 
     /**
@@ -72,17 +73,12 @@ class ProfilController extends Controller
      * @param AuthenticationUtils $authUtils
      * @return \Symfony\Component\HttpFoundation\Response
      * @param User $user
-     * @ParamConverter("user", class="App\Entity\User", isOptional="true")
      */
-    public function connexion(Request $request, AuthenticationUtils $authUtils, User $user) {
+    public function connexion(Request $request, AuthenticationUtils $authUtils) {
         $lastUsername = $authUtils->getLastUsername();
         $error = $authUtils->getLastAuthenticationError();
 
-dump($user);
-        if($user->isBanned() == true) {
-            $this->addFlash('banni', 'Vous êtes banni de ce site. Veuillez contacter l\'administrateur de ce site pour vous débloquer.');
-            return $this->redirectToRoute('connexion');
-        }
+
 
         return $this->render('connexion.html.twig', array(
             'username' => $lastUsername,
@@ -160,4 +156,6 @@ dump($user);
 
         return $this->redirectToRoute('profil');
     }
+
+
 }

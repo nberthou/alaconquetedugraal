@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+    <script>
+
+    </script>
+{% endblock %}
+
+{% block body %}
+
+    <h1>Rechercher un joueur</h1>
+    <form action="{{ path('creer_partie') }}" method="post">
+        <select name="adversaire">
+            <option value="">Choisir</option>
+            {% for joueur in joueurs %}
+                <option value="{{ joueur.id }}">{{ joueur.pseudo }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit">
+    </form>
+
+{% endblock %}

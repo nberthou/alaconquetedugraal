@@ -64,21 +64,21 @@ class User implements UserInterface
      * @ORM\Column(type="json_array")
      * @var array
      */
-    private $roles = array('ROLE_USER');
+    private $roles = array();
 
 
     /**
-     * @ORM\Column(type="json_array")
+     * @ORM\Column(type="text"))
      * @var array
      */
     private $amis = array();
 
-
     /**
-     * @ORM\Column(type="boolean")
-     * @var bool
+     * @ORM\Column(type="boolean", nullable=true)
+     * @var boolean
      */
-    private $banned = false;
+    private $banned;
+
 
     /**
      * @return mixed
@@ -231,6 +231,7 @@ class User implements UserInterface
     public function setAmis($amis)
     {
         $this->amis = $amis;
+
     }
 
     /**
@@ -248,9 +249,6 @@ class User implements UserInterface
     {
         $this->banned = $banned;
     }
-
-
-
 
 
 

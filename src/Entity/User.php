@@ -74,7 +74,7 @@ class User implements UserInterface
     private $amis = array();
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      * @var boolean
      */
     private $banned;

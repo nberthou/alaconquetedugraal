@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 
 /**
- * Class Partie
+ * Class partie
  * @package App\Entity
  * @ORM\Entity
  */

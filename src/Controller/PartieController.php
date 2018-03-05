@@ -9,11 +9,14 @@
 namespace App\Controller;
 
 
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/parties")
+ * @Route("/partie")
  * Class PartieController
  * @package App\Controller
  */
@@ -25,10 +28,24 @@ class PartieController extends Controller
     }
 
     /**
-     * @Route("/nouvelle", name="nouvelle_partie")
+     * @Route("/recherche", name="recherche_joueurs")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function creation() {
-        return $this->render('Partie/creation_partie.html.twig');
-    }
+   public function rechercheJoueurs() {
+       $joueurs = $this->getDoctrine()->getRepository(User::class)->findAll();
+       return $this->render('partie/recherche.html.twig', ['joueurs' => $joueurs]);
+   }
+
+    /**
+     * @Route("/creer", name="creer_partie")
+     * @param Request $request
+     * @return Response
+     */
+   public function creerParties(Request $request) {
+       $idAdversaire = $request->request->get('adversaire');
+       $idJoueur = $this->getUser();
+       dump($idJoueur);
+       dump($idAdversaire);
+       return $this->render('partie/recherche.html.twig');
+   }
 }

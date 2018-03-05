@@ -12,6 +12,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\ConnexionType;
 use App\Form\InscriptionType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -70,10 +71,18 @@ class ProfilController extends Controller
      * @param Request $request
      * @param AuthenticationUtils $authUtils
      * @return \Symfony\Component\HttpFoundation\Response
+     * @param User $user
+     * @ParamConverter("user", class="App\Entity\User", isOptional="true")
      */
-    public function connexion(Request $request, AuthenticationUtils $authUtils) {
+    public function connexion(Request $request, AuthenticationUtils $authUtils, User $user) {
         $lastUsername = $authUtils->getLastUsername();
         $error = $authUtils->getLastAuthenticationError();
+
+dump($user);
+        if($user->isBanned() == true) {
+            $this->addFlash('banni', 'Vous êtes banni de ce site. Veuillez contacter l\'administrateur de ce site pour vous débloquer.');
+            return $this->redirectToRoute('connexion');
+        }
 
         return $this->render('connexion.html.twig', array(
             'username' => $lastUsername,

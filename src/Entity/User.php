@@ -64,8 +64,21 @@ class User implements UserInterface
      * @ORM\Column(type="json_array")
      * @var array
      */
-    private $roles = array();
+    private $roles = array('ROLE_USER');
 
+
+    /**
+     * @ORM\Column(type="json_array")
+     * @var array
+     */
+    private $amis = array();
+
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @var bool
+     */
+    private $banned = false;
 
     /**
      * @return mixed
@@ -203,6 +216,40 @@ class User implements UserInterface
     {
         $this->parties_gagnees = $parties_gagnees;
     }
+
+    /**
+     * @return array
+     */
+    public function getAmis()
+    {
+        return $this->amis;
+    }
+
+    /**
+     * @param array $amis
+     */
+    public function setAmis($amis)
+    {
+        $this->amis = $amis;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isBanned()
+    {
+        return $this->banned;
+    }
+
+    /**
+     * @param bool $banned
+     */
+    public function setBanned($banned)
+    {
+        $this->banned = $banned;
+    }
+
+
 
 
 

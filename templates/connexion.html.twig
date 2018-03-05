@@ -23,4 +23,9 @@
 
                 <button class="btn btn-success pull-right">Se connecter</button>
             </form>
+    {% for message in app.flashes('banni') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
 {% endblock  %}

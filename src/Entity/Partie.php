@@ -12,6 +12,7 @@ namespace App\Entity;
 class Partie
 {
     protected $id;
+
     protected $partie_nom;
     protected $main_j1; // text --> tableau JSON
     protected $main_j2; // text --> tableau JSON
@@ -28,5 +29,5 @@ class Partie
     protected $action_j2; // tableau JSON
     protected $terrain_j1; // tableau JSON
     protected $terrain_j2; // tableau JSON
-    protected $debut_partie;
+    protected $debut_partie; //
 }

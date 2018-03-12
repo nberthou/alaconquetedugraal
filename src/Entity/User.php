@@ -21,7 +21,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @UniqueEntity(fields="email", message="Adresse mail déjà prise.")
  * @UniqueEntity(fields="pseudo", message="Pseudo déjà pris.")
  */
-class User implements UserInterface
+class User implements UserInterface, \JsonSerializable
 {
 
     /**
@@ -67,11 +67,6 @@ class User implements UserInterface
     private $roles = array();
 
 
-    /**
-     * @ORM\Column(type="text"))
-     * @var array
-     */
-    private $amis = array();
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -217,22 +212,6 @@ class User implements UserInterface
         $this->parties_gagnees = $parties_gagnees;
     }
 
-    /**
-     * @return array
-     */
-    public function getAmis()
-    {
-        return $this->amis;
-    }
-
-    /**
-     * @param array $amis
-     */
-    public function setAmis($amis)
-    {
-        $this->amis = $amis;
-
-    }
 
     /**
      * @return bool
@@ -250,7 +229,12 @@ class User implements UserInterface
         $this->banned = $banned;
     }
 
+    public function jsonSerialize()
+    {
+        $vars = get_object_vars($this);
 
+        return $vars;
+    }
 
 
 

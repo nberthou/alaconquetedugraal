@@ -1,12 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<h1>Profil de {{ app.user.pseudo }}</h1>
-    <a href="{{ path('edit_pseudo', {'id' : app.user.id}) }}">{{ path('edit_pseudo', {'id' : app.user.id}) }}</a>
+    <h1>Profil de {{ app.user.pseudo }}</h1>
 
     <form method="post" action="{{ path('edit_pseudo', {'id': app.user.id}) }}">
         <div class="form-group">
-            <h1 class="form-text">Changer de pseudo</h1>
+            <h3 class="form-text">Changer de pseudo</h3>
             <input type="text" name="pseudo" placeholder="Nouveau pseudo" class="form-control">
             <input type="hidden" value="{{ app.user.id }}" name="id">
             <button type="submit" class="btn btn-danger">Changer de pseudo</button>
@@ -15,7 +14,7 @@
     <div class="row"></div>
     <form action="{{ path('edit_mdp', {'id': app.user.id}) }}" method="post">
         <div class="form-group">
-            <h1 class="form-text">Changer de mot de passe</h1>
+            <h3 class="form-text">Changer de mot de passe</h3>
             <input type="password"  name="mdp" placeholder="Nouveau mot de passe" class="form-control">
             <input type="hidden" name="id" value="{{ app.user.id }}">
             <button type="submit" class="btn btn-danger">Changer de mot de passe</button>
@@ -24,7 +23,7 @@
     <div class="row"></div>
     <form method="post" action="{{ path('edit_mail', {'id': app.user.id}) }}">
         <div class="form-group">
-            <h1 class="form-text">Changer de pseudo</h1>
+            <h3 class="form-text">Changer de pseudo</h3>
             <input type="text" name="email" placeholder="Adresse mail actuelle : {{ app.user.email }}" class="form-control" >
             <input type="hidden" value="{{ app.user.id }}" name="id">
             <button type="submit" class="btn btn-danger">Changer d'adresse mail</button>
@@ -32,17 +31,68 @@
     </form>
 
 
-    {{ user.amis }}
-    <h1>Ajouter un joueur en ami</h1>
-    {#<form action="{{ path('ajout_ami') }}" method="post">#}
-        {#<select name="ami">#}
-            {#<option value="">Choisir</option>#}
-            {#{% for joueur in joueurs %}#}
-                {#<option value="{{ joueur.id }}">{{ joueur.pseudo }}</option>#}
-            {#{% endfor %}#}
-        {#</select>#}
-        {#<input type="submit" value="Ajouter en ami" onclick="ajaxCall()">#}
-    {#</form>#}
+    <h3>Ajouter un joueur en ami</h3>
+    <form action="{{ path('ajout_ami') }}" method="post">
+        <select name="ami">
+            {% for joueur in joueurs %}
+                {% if (joueur.id != app.user.id)   %}
+                    <option value="{{ joueur.id }}">{{ joueur.pseudo }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <input type="submit" value="Ajouter en ami">
+    </form>
+    <br>
+    {% for message in app.flashes('notice_ajout') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <h3>Liste d'amis</h3>
+                        {% for ami in amis %}
+                        <form action="{{ path('supprimer_ami') }}" method="post">
+                            {% if app.user.pseudo != ami.j2.pseudo %}
+                                <label> {{ ami.j2.pseudo }} </label> <input type="hidden" name="ami_id" value="{{ ami.j2.id }}"> <input type="submit" value="Supprimer">
+                            {% elseif app.user.pseudo != ami.j1.pseudo %}
+                                <label> {{ ami.j1.pseudo }} </label> <input type="hidden" name="ami_id" value="{{ ami.j1.id }}"> <input type="submit" value="Supprimer">
+                            {% endif %}
+                        </form>
+                        {% endfor %}
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <h3>Invitations reçues</h3>
+                {% for amiAttente in amisAttente %}
+                    <form action="{{ path('repondre_demande') }}" method="post">
+                            {% if app.user.pseudo != amiAttente.j1.pseudo and amiAttente.derniereAction != app.user.id %}
+                                <label>{{ amiAttente.j1.pseudo }} </label><input type="hidden" value="{{ amiAttente.j1.id }}" name="ami_id"> <input type="submit" value="Accepter" name="accepter"> <input type="submit" value="Refuser" name="refuser">
+                            {% endif %}
+                    </form>
+                {% endfor %}
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <h3>Invitations envoyées</h3>
+                {% for amiAttente in amisAttente %}
+                    <form action="{{ path('supprimer_ami') }}" method="post">
+                            {% if app.user.pseudo != amiAttente.j2.pseudo and amiAttente.derniereAction == app.user.id %}
+                                <label>{{ amiAttente.j2.pseudo }} </label><input type="hidden" name="ami_id" value="{{ amiAttente.j2.id }}"> <input type="submit" value="Annuler">
+                            {% endif %}
+                    </form>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% for message in app.flashes('notice_amis') %}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
 
 {% endblock %}
 

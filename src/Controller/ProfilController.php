@@ -9,9 +9,11 @@
 namespace App\Controller;
 
 
+use App\Entity\Ami;
 use App\Entity\User;
 use App\Form\ConnexionType;
 use App\Form\InscriptionType;
+use App\Repository\AmiRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -36,8 +38,11 @@ class ProfilController extends Controller
      */
     public function indexAction() {
         $user = $this->getUser();
+        $userId = $user->getId();
         $joueurs = $this->getDoctrine()->getRepository(User::class)->findAll();
-        return $this->render('Profil/profil.html.twig', array('user' => $user, 'joueurs' => $joueurs));
+        $amis = $this->getDoctrine()->getRepository(Ami::class)->AjoutFindBy($userId, 1);
+        $amisAttente = $this->getDoctrine()->getRepository(Ami::class)->AjoutFindBy($userId, 0);
+        return $this->render('Profil/profil.html.twig', array('user' => $user, 'joueurs' => $joueurs, 'amis' => $amis, 'amisAttente' => $amisAttente));
     }
 
     /**
@@ -48,24 +53,20 @@ class ProfilController extends Controller
      */
     public function inscription(Request $request, UserPasswordEncoderInterface $encoder) {
         $user = new User();
-
         $form  = $this->createForm(InscriptionType::class, $user);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
-
             $pass = $user->getMdp();
             $mdp = $encoder->encodePassword($user, $pass);
             $user->setMdp($mdp);
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-
             return $this->redirectToRoute('connexion');
         }
-
         return $this->render('inscription.html.twig', array('form' => $form->createView()));
     }
+
 
     /**
      * @Route("/connexion", name="connexion")
@@ -157,5 +158,93 @@ class ProfilController extends Controller
         return $this->redirectToRoute('profil');
     }
 
+    /**
+     * @Route("/ajout_ami", name="ajout_ami")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function ajoutAmis(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $idJoueur = $this->getUser()->getId();
+        $joueur = $em->getRepository(User::class)->find($idJoueur);
+        $idAmi = $request->request->get('ami');
+        $getAmi = $em->getRepository(User::class)->find($idAmi);
+        $amiRep = $em->getRepository(Ami::class)->checkIfFriends($idJoueur, $idAmi);
 
+        if($amiRep != null) {
+            if($amiRep->getStatut() == 1) {
+                $this->addFlash('notice_ajout', 'Vous êtes déjà ami avec cette personne.');
+                return $this->redirectToRoute('profil');
+            } else if($amiRep->getStatut() == 0 && $amiRep->getDerniereAction() == $idJoueur) {
+                $this->addFlash('notice_ajout', 'Vous avez déjà demandé cette personne en ami');
+                return $this->redirectToRoute('profil');
+            }
+            else if($amiRep->getStatut() == 0 && $amiRep->getDerniereAction() == $idAmi) {
+                $this->addFlash('notice_ajout', 'Cette personne vous a demandé en ami. Allez l\'accepter !');
+                return $this->redirectToRoute('profil');
+            }
+        } else if($amiRep == null) {
+            $ami = new Ami();
+            $ami->setJ1($joueur);
+            $ami->setJ2($getAmi);
+            $ami->setStatut(0);
+            $ami->setDerniereAction($idJoueur);
+            $em->persist($ami);
+            $em->flush();
+            return $this->redirectToRoute('profil');
+        }
+
+        $this->addFlash('notice_ajout', 'Erreur.');
+        return $this->redirectToRoute('profil');
+    }
+
+    /**
+     * @Route("/repondre_demande", name="repondre_demande")
+     * @param Request $request
+     */
+    public function repondreDemandeAmi(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $idJoueur = $this->getUser()->getId();
+        $idAmi = $request->request->get('ami_id');
+        $amiRep = $em->getRepository(Ami::class)->checkIfFriends($idJoueur, $idAmi);
+        $accepter = $request->request->get('accepter');
+        $refuser = $request->request->get('refuser');
+        if($accepter) {
+
+            $amiRep->setStatut(1);
+            $em->flush();
+            return $this->redirectToRoute('profil');
+        }
+        if($refuser) {
+            dump($amiRep->getId());
+            $em->remove($amiRep);
+            $em->flush();
+
+            return $this->redirectToRoute('profil');
+        }
+        $this->addFlash('notice_amis', 'Erreur.');
+        return $this->redirectToRoute('profil');
+    }
+
+    /**
+     *
+     * @Route("/supprimer_ami", name="supprimer_ami")
+     */
+    public function supprimerAmi(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $idJoueur = $this->getUser()->getId();
+        $idAmi = $request->request->get('ami_id');
+        $amiRep = $em->getRepository(Ami::class)->checkIfFriends($idJoueur, $idAmi);
+        if($amiRep) {
+            $em->remove($amiRep);
+            $em->flush();
+        }
+        else {
+            $this->addFlash('notice_amis', 'Vous n\'êtes pas amis.');
+            return $this->redirectToRoute('profil');
+        }
+        $this->addFlash('notice_amis', 'Votre demande a été annulée.');
+        return $this->redirectToRoute('profil');
+    }
 }

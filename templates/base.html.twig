@@ -2,18 +2,19 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}A la conquête du graal{% endblock %}</title>
         <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
 <ul>
     <li><a href="{{ path('index') }}">Accueil</a></li>
-    <li><a href="{{ path('profil') }}">Profil</a></li>
     {% if not app.user %}
         <li><a href="{{ path('inscription') }}">Inscription</a></li>
         <li><a href="{{ path('connexion') }}">Connexion</a></li>
     {% elseif app.user %}
+        <li><a href="{{ path('profil') }}">Profil</a></li>
+        <li><a href="{{ path('recherche_joueurs') }}">Créer une partie</a></li>
         <li><a href="{{ logout_path() }}">Déconnexion</a></li>
         {% if is_granted('ROLE_ADMIN') %}
         <li><a href="{{ path('admin') }}">Admin</a></li>
@@ -23,6 +24,6 @@
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     <script src="{{ asset('js/bootstrap.js') }}"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     </body>
 </html>

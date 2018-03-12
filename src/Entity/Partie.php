@@ -30,11 +30,6 @@ class Partie
     /**
      * @ORM\Column(type="text")
      */
-    private $partie_nom;
-
-    /**
-     * @ORM\Column(type="text")
-     */
     private $main_j1; // text --> tableau JSON
 
     /**
@@ -380,5 +375,7 @@ class Partie
     {
         $this->terrain_j2 = $terrain_j2;
     }
-    
+
+
+
 }

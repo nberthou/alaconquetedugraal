@@ -31,8 +31,10 @@ class PartieController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
    public function rechercheJoueurs() {
+       $userId = $this->getUser()->getId();
+       $amis = $this->getDoctrine()->getManager()->getRepository(Ami::class)->AjoutFindBy($userId, 1);
        $joueurs = $this->getDoctrine()->getRepository(User::class)->findAll();
-       return $this->render('partie/recherche.html.twig', ['joueurs' => $joueurs]);
+       return $this->render('partie/recherche.html.twig', ['joueurs' => $joueurs, 'amis' => $amis]);
    }
 
     /**
@@ -43,6 +45,8 @@ class PartieController extends Controller
    public function creerParties(Request $request) {
        $idAdversaire = $request->request->get('adversaire');
        $idJoueur = $this->getUser()->getId();
+       $joueur = $this->getDoctrine()->getManager()->getRepository(User::class)->find($idJoueur);
+       $adversaire = $this->getDoctrine()->getManager()->getRepository(User::class)->find($idAdversaire);
 
        $cartes = $this->getDoctrine()->getRepository(Carte::class)->findAll();
        $tCartes = array();
@@ -68,12 +72,16 @@ class PartieController extends Controller
        $pioche = $tCartes;
 
        $partie = new Partie();
-       $partie->setJ1($idJoueur);
-       $partie->setJ2($idAdversaire);
+       $partie->setJ1($joueur);
+       $partie->setJ2($adversaire);
        $partie->setCarteJetee($cartejetee);
        $partie->setMainJ1(json_encode($mainJ1));
-       $partie->setMainJ2($this->json_encode($mainJ2));
-       $partie->setPioche($pioche);
+       $partie->setMainJ2(json_encode($mainJ2));
+       $partie->setPioche(json_encode($pioche));
+       $partie->setScoreJ1(0);
+       $partie->setScoreJ2(0);
+       $partie->setTour(1);
+       $partie->setManche(1);
 
        $em = $this->getDoctrine()->getManager();
 

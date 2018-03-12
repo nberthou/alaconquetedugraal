@@ -8,15 +8,29 @@
 
 {% block body %}
 
-    <h1>Rechercher un joueur</h1>
+    <h1>Rechercher un joueur...</h1>
     <form action="{{ path('creer_partie') }}" method="post">
         <select name="adversaire">
-            <option value="">Choisir</option>
             {% for joueur in joueurs %}
-                <option value="{{ joueur.id }}">{{ joueur.pseudo }}</option>
+                {% if app.user.id != joueur.id %}
+                    <option value="{{ joueur.id }}">{{ joueur.pseudo }}</option>
+                {% endif %}
             {% endfor %}
         </select>
         <input type="submit">
+    </form>
+
+    <h1>... ou jouer avec un ami !</h1>
+    <form action="{{ path('creer_partie') }}" method="post">
+        <select name="adversaire">
+            {% for ami in amis %}
+                    {% if app.user.pseudo != ami.j2.pseudo %}
+                        <label> {{ ami.j2.pseudo }} </label> <input type="hidden" name="ami_id" value="{{ ami.j2.id }}"> <input type="submit" value="Supprimer">
+                    {% elseif app.user.pseudo != ami.j1.pseudo %}
+                        <label> {{ ami.j1.pseudo }} </label> <input type="hidden" name="ami_id" value="{{ ami.j1.id }}"> <input type="submit" value="Supprimer">
+                    {% endif %}
+            {% endfor %}
+        </select>
     </form>
 
 {% endblock %}

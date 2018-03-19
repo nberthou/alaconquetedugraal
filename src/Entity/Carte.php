@@ -23,10 +23,6 @@ class Carte
      * @ORM\Column(type="integer")
      */
     protected $id;
-    /**
-     * @ORM\Column(type="text")
-     */
-    protected $nom;
 
     /**
      * @ORM\Column(type="integer")

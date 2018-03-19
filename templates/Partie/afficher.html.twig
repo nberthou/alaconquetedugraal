@@ -1,5 +1,35 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-{{ partie }}
+    <div >
+
+        <h1>Carte écartée : </h1>
+        <img src="{{ asset(cartes[partie.cartejetee].img) }}">
+
+        <h1>La pioche : </h1>
+
+        {%  for carte in partie.pioche  %}
+            {{ cartes[carte].img }}
+        {% endfor %}
+
+        <h1>La main du j1 : </h1>
+        {#{{ partie.mainJ1 }}#}
+        {% for carte in partie.mainJ1 %}
+            {{ cartes[carte].id }},
+        {% endfor %}
+
+        <h1> La main du j2 : </h1>
+        {% for carte in partie.mainJ2 %}
+            {{ cartes[carte].id }},
+        {% endfor %}
+    </div>
+
+    <h1>C'est le tour de : {{ partie.tour.pseudo }} </h1>
+    {% if app.user.id == partie.tour.id %}
+        {% if app.user.id == partie.J1.id %}
+            <a href="{{ path('changement_tour', {'id' : partie.id}) }}"><input type="hidden" name="adversaire" value="{{ partie.J2.id }}"><input type="button" value="Changer de tour"></a>
+        {% elseif app.user.id == partie.J2.id %}
+            <a href="{{ path('changement_tour', {'id' : partie.id}) }}"><input type="hidden" name="adversaire" value="{{ partie.J1.id }}"><input type="button" value="Changer de tour"></a>
+        {% endif %}
+    {% endif %}
 {% endblock %}

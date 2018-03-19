@@ -10,6 +10,7 @@ namespace App\Controller;
 
 
 use App\Entity\Ami;
+use App\Entity\Partie;
 use App\Entity\User;
 use App\Form\ConnexionType;
 use App\Form\InscriptionType;
@@ -36,13 +37,15 @@ class ProfilController extends Controller
      * @Route("/profil", name="profil")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction() {
+    public function indexAction()
+    {
         $user = $this->getUser();
         $userId = $user->getId();
         $joueurs = $this->getDoctrine()->getRepository(User::class)->findAll();
         $amis = $this->getDoctrine()->getRepository(Ami::class)->AjoutFindBy($userId, 1);
         $amisAttente = $this->getDoctrine()->getRepository(Ami::class)->AjoutFindBy($userId, 0);
-        return $this->render('Profil/profil.html.twig', array('user' => $user, 'joueurs' => $joueurs, 'amis' => $amis, 'amisAttente' => $amisAttente));
+        $parties = $this->getDoctrine()->getRepository(Partie::class)->EtatFindBy($userId, 0);
+        return $this->render('Profil/profil.html.twig', array('user' => $user, 'joueurs' => $joueurs, 'amis' => $amis, 'amisAttente' => $amisAttente, 'parties' => $parties));
     }
 
     /**
@@ -51,7 +54,8 @@ class ProfilController extends Controller
      * @param UserPasswordEncoderInterface $encoder
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function inscription(Request $request, UserPasswordEncoderInterface $encoder) {
+    public function inscription(Request $request, UserPasswordEncoderInterface $encoder)
+    {
         $user = new User();
         $form  = $this->createForm(InscriptionType::class, $user);
         $form->handleRequest($request);
@@ -90,7 +94,8 @@ class ProfilController extends Controller
     /**
      * @Route("/deconnexion", name="deconnexion")
      */
-    public function deconnexion() {
+    public function deconnexion()
+    {
 
     }
 
@@ -99,7 +104,8 @@ class ProfilController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function editPseudo(Request $request) {
+    public function editPseudo(Request $request)
+    {
 
         $em = $this->getDoctrine()->getManager();
         $id = $request->request->get('id');
@@ -121,7 +127,8 @@ class ProfilController extends Controller
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @param UserPasswordEncoderInterface $encoder
      */
-    public function editMdp(Request $request, UserPasswordEncoderInterface $encoder) {
+    public function editMdp(Request $request, UserPasswordEncoderInterface $encoder)
+    {
         $em = $this->getDoctrine()->getManager();
         $id = $request->request->get('id');
         $mdp = $request->request->get('mdp');
@@ -143,7 +150,8 @@ class ProfilController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function editEmail(Request $request) {
+    public function editEmail(Request $request)
+    {
         $em = $this->getDoctrine()->getManager();
         $id = $request->request->get('id');
         $email = $request->request->get('email');
@@ -179,8 +187,7 @@ class ProfilController extends Controller
             } else if($amiRep->getStatut() == 0 && $amiRep->getDerniereAction() == $idJoueur) {
                 $this->addFlash('notice_ajout', 'Vous avez déjà demandé cette personne en ami');
                 return $this->redirectToRoute('profil');
-            }
-            else if($amiRep->getStatut() == 0 && $amiRep->getDerniereAction() == $idAmi) {
+            } else if($amiRep->getStatut() == 0 && $amiRep->getDerniereAction() == $idAmi) {
                 $this->addFlash('notice_ajout', 'Cette personne vous a demandé en ami. Allez l\'accepter !');
                 return $this->redirectToRoute('profil');
             }
@@ -202,8 +209,10 @@ class ProfilController extends Controller
     /**
      * @Route("/repondre_demande", name="repondre_demande")
      * @param Request $request
+     * @return Response
      */
-    public function repondreDemandeAmi(Request $request) {
+    public function repondreDemandeAmi(Request $request)
+    {
         $em = $this->getDoctrine()->getManager();
         $idJoueur = $this->getUser()->getId();
         $idAmi = $request->request->get('ami_id');
@@ -228,7 +237,8 @@ class ProfilController extends Controller
     }
 
     /**
-     *
+     * @param Request $request
+     * @return Response
      * @Route("/supprimer_ami", name="supprimer_ami")
      */
     public function supprimerAmi(Request $request) {
@@ -236,6 +246,8 @@ class ProfilController extends Controller
         $idJoueur = $this->getUser()->getId();
         $idAmi = $request->request->get('ami_id');
         $amiRep = $em->getRepository(Ami::class)->checkIfFriends($idJoueur, $idAmi);
+        $supprimer = $request->request->get('supprimer');
+        $annuler = $request->request->get('annuler');
         if($amiRep) {
             $em->remove($amiRep);
             $em->flush();
@@ -244,7 +256,14 @@ class ProfilController extends Controller
             $this->addFlash('notice_amis', 'Vous n\'êtes pas amis.');
             return $this->redirectToRoute('profil');
         }
-        $this->addFlash('notice_amis', 'Votre demande a été annulée.');
+
+        if($annuler) {
+            $this->addFlash('notice_amis', 'Votre demande a été annulée.');
+            return $this->redirectToRoute('profil');
+        } elseif($supprimer) {
+            $this->addFlash('notice_amis', 'Cet ami a été supprimé.');
+            return $this->redirectToRoute('profil');
+        }
         return $this->redirectToRoute('profil');
     }
 }

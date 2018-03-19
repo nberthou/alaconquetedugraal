@@ -10,12 +10,13 @@ namespace App\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
  * Class partie
  * @package App\Entity
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\PartieRepository")
  */
 class Partie
 {
@@ -31,6 +32,7 @@ class Partie
      * @ORM\Column(type="text")
      */
     private $main_j1; // text --> tableau JSON
+    /**
 
     /**
      * @ORM\Column(type="text")
@@ -60,7 +62,7 @@ class Partie
     private $score_j2; // int
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User");
      */
     private $tour; // "J1 ou J2" OU liaison
 
@@ -105,6 +107,23 @@ class Partie
     private $terrain_j2;
 
     /**
+     * @ORM\Column(type="smallint")
+     */
+    private $etat;
+
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\DateTime()
+     */
+    private $debut;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\DateTime()
+     */
+    private $fin;
+
+    /**
      * @return int
      */
     public function getId()
@@ -141,7 +160,7 @@ class Partie
      */
     public function getMainJ1()
     {
-        return $this->main_j1;
+        return (array)json_decode($this->main_j1);
     }
 
     /**
@@ -157,7 +176,7 @@ class Partie
      */
     public function getMainJ2()
     {
-        return $this->main_j2;
+        return (array)json_decode($this->main_j2);
     }
 
     /**
@@ -269,7 +288,7 @@ class Partie
      */
     public function getPioche()
     {
-        return $this->pioche;
+        return json_decode($this->pioche);
     }
 
     /**
@@ -285,7 +304,7 @@ class Partie
      */
     public function getObjectifs()
     {
-        return $this->objectifs;
+        return (array)json_decode($this->objectifs);
     }
 
     /**
@@ -317,7 +336,7 @@ class Partie
      */
     public function getActionJ1()
     {
-        return $this->action_j1;
+        return (array)json_decode($this->action_j1);
     }
 
     /**
@@ -333,7 +352,7 @@ class Partie
      */
     public function getActionJ2()
     {
-        return $this->action_j2;
+        return (array)json_decode($this->action_j2);
     }
 
     /**
@@ -349,7 +368,7 @@ class Partie
      */
     public function getTerrainJ1()
     {
-        return $this->terrain_j1;
+        return json_decode($this->terrain_j1);
     }
 
     /**
@@ -365,7 +384,7 @@ class Partie
      */
     public function getTerrainJ2()
     {
-        return $this->terrain_j2;
+        return json_decode($this->terrain_j2);
     }
 
     /**
@@ -374,6 +393,49 @@ class Partie
     public function setTerrainJ2($terrain_j2)
     {
         $this->terrain_j2 = $terrain_j2;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEtat()
+    {
+        return $this->etat;
+    }
+
+    /**
+     * @param mixed $etat
+     */
+    public function setEtat($etat)
+    {
+        $this->etat = $etat;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDebut()
+    {
+        return $this->debut;
+    }
+
+
+    public function setDebut()
+    {
+        $this->debut = date('d/m/Y H:i');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFin()
+    {
+        return $this->fin;
+    }
+
+    public function setFin()
+    {
+        $this->fin = date('d/m/Y H:i');
     }
 
 

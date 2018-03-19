@@ -56,9 +56,11 @@
                         {% for ami in amis %}
                         <form action="{{ path('supprimer_ami') }}" method="post">
                             {% if app.user.pseudo != ami.j2.pseudo %}
-                                <label> {{ ami.j2.pseudo }} </label> <input type="hidden" name="ami_id" value="{{ ami.j2.id }}"> <input type="submit" value="Supprimer">
+                                <label> {{ ami.j2.pseudo }} </label> <input type="hidden" name="ami_id" value="{{ ami.j2.id }}"> <input type="submit" value="Supprimer" name="supprimer">
+                                <a href="{{ path('creer_partie') }}"><button></button></a>
                             {% elseif app.user.pseudo != ami.j1.pseudo %}
-                                <label> {{ ami.j1.pseudo }} </label> <input type="hidden" name="ami_id" value="{{ ami.j1.id }}"> <input type="submit" value="Supprimer">
+                                <label> {{ ami.j1.pseudo }} </label> <input type="hidden" name="ami_id" value="{{ ami.j1.id }}"> <input type="submit" value="Supprimer" name="supprimer">
+                                <a href="{{ path('creer_partie') }}"><button></button></a>
                             {% endif %}
                         </form>
                         {% endfor %}
@@ -80,7 +82,7 @@
                 {% for amiAttente in amisAttente %}
                     <form action="{{ path('supprimer_ami') }}" method="post">
                             {% if app.user.pseudo != amiAttente.j2.pseudo and amiAttente.derniereAction == app.user.id %}
-                                <label>{{ amiAttente.j2.pseudo }} </label><input type="hidden" name="ami_id" value="{{ amiAttente.j2.id }}"> <input type="submit" value="Annuler">
+                                <label>{{ amiAttente.j2.pseudo }} </label><input type="hidden" name="ami_id" value="{{ amiAttente.j2.id }}"> <input type="submit" value="Annuler" name="annuler">
                             {% endif %}
                     </form>
                 {% endfor %}
@@ -92,6 +94,15 @@
                 {{ message }}
             </div>
         {% endfor %}
+    </div>
+    <br>
+    <div class="container-fluid">
+        <h2>Invitations à une partie</h2>
+            {% for partie in parties %}
+                {% if partie.j1.id == app.user.id or partie.j2.id == app.user.id %}
+            {{ partie.id }}
+        {% endif %}
+            {% endfor %}
     </div>
 
 {% endblock %}

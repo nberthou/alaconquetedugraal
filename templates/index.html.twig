@@ -1,5 +1,64 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    {% endblock %}
 {% block body %}
-<h1>Accueil</h1>
+
+
+    <section class="main-contenu">
+        <div class="logo">
+            <div class="image">
+                <img src="img/logo.svg" alt="logo A la conquête du Graal">
+            </div>
+            <div class="titre">
+                <h1>
+                    A la conquête du Graal
+                </h1>
+            </div>
+        </div>
+    </section>
+    <section class="jouer">
+        <div class="bouton1">
+            <h2>
+                {% if app.user %}
+                <div class="link-one">
+                    <a href="{{ path('recherche_joueurs') }}">Commencer à jouer</a>
+                </div>
+                {% endif %}
+                {% if not app.user %}
+                    <div class="link-one">
+                        <a href="{{ path('inscription') }}">Inscription</a>
+                    </div>
+                {% endif %}
+            </h2>
+        </div>
+                    <div class="bouton2">
+                        <h2>
+                            <div class="link-one">
+                                <a class="afterglow" href="#myvideo">Tutoriel</a>
+                                <video id="myvideo" width="960" height="540">
+                                    <source src="img/tuto.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                        </h2>
+                    </div>
+        <div class="bouton2">
+            <h2>
+                {% if not app.user %}
+                <div class="link-one">
+                    <a href="{{ path('connexion') }}">Connexion</a>
+                </div>
+                {% endif %}
+                {% if app.user %}
+                    <div class="link-one">
+                        <a href="{{ path('profil') }}">Profil</a>
+                    </div>
+                    {% endif %}
+            </h2>
+        </div>
+
+
+    </section>
+
+    <script src="http://cdn.jsdelivr.net/npm/afterglowplayer@1.x"></script>
 {% endblock %}

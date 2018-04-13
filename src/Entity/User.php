@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * Class InscriptionType
  * @package App\Entity
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields="email", message="Adresse mail déjà prise.")
  * @UniqueEntity(fields="pseudo", message="Pseudo déjà pris.")
  */
@@ -64,7 +64,7 @@ class User implements UserInterface, \JsonSerializable
      * @ORM\Column(type="json_array")
      * @var array
      */
-    private $roles = array("ROLE_USER");
+    private $roles = array();
 
 
 

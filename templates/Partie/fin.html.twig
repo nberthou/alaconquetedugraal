@@ -1,0 +1,51 @@
+<section class="main-contenu">
+ <div class="logo">
+  <div class="image">
+   <img src="img/logo.svg" alt="logo A la conquête du Graal">
+  </div>
+  <div class="titre">
+   <h1>
+    Partie terminée
+   </h1>
+  </div>
+ </div>
+</section>
+<section class="jouer col-md-12">
+ <div class="bouton1 col-md-10">
+  <h2>
+   <div class="link-one">
+    <p>
+     Le gagnant est
+     <!-- Identifiant joueur gagnant -->
+     <strong>{{ gagnant.pseudo }}</strong>,
+
+     <!-- Score + faveur -->
+     avec un score de {{ scoreG }} points, en gagnent les faveurs de {{ objectifsG }} personnages face à son terrible adversaire
+
+     <!-- Identifiant joueur perdant -->
+     <strong>{{ perdant.pseudo }}</strong>
+
+     <!-- Score + faveur -->
+     qui termine avec un score de {{ scoreP }} en gagnent les faveurs
+     de {{ objectifsP }} personnages..
+    </p>
+   </div>
+  </h2>
+ </div>
+
+</section>
+
+<!-- Lightbox video -->
+<script src="http://cdn.jsdelivr.net/npm/afterglowplayer@1.x"></script>
+
+
+<!-- script bootstrap -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,137 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/screen.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">{% endblock %}
+
+{% block body %}
+
+
+    {{ include('Partie/plateau.html.twig') }}
+
+{% endblock %}
+
+{% block javascripts %}
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script>
+
+
+        $(document).ready(function() {
+            $('.oui1').animate({left: "12%", top: "85%"}, 500, function () {
+                $('.face1').animate({zIndex: "6", opacity: "1"}, 200)
+            });
+            $('.oui2').animate({left: "23%", top: "85%"}, 500, function () {
+                $('.face2').animate({zIndex: "6", opacity: "1"}, 215)
+            });
+            $('.oui3').animate({left: "34%", top: "85%"}, 500, function () {
+                $('.face3').animate({zIndex: "6", opacity: "1"}, 230)
+            });
+            $('.oui4').animate({left: "45%", top: "85%"}, 500, function () {
+                $('.face4').animate({zIndex: "6", opacity: "1"}, 245)
+            });
+            $('.oui5').animate({left: "56%", top: "85%"}, 500, function () {
+                $('.face5').animate({zIndex: "6", opacity: "1"}, 260)
+            });
+            $('.oui6').animate({left: "67%", top: "85%"}, 500, function () {
+                $('.face6').animate({zIndex: "6", opacity: "1"}, 275)
+            });
+            $('.oui7').animate({left: "78%", top: "85%"}, 500, function () {
+                $('.face7').animate({zIndex: "6", opacity: "1"}, 290)
+            });
+
+            $(document).ready(function() {
+                $('.bienvenue').delay(5000).fadeOut(function() {
+                    $('.bienvenue').empty.load('{{ path('afficher_actions', {'id' : partie.id}) }} #tour', function() {
+                        $('.bienvenue').fadeIn('slow');
+                    })
+                })
+            })
+
+            $('#secret').click(function () {
+                $('.bienvenue').fadeOut(function () {
+                    $('.bienvenue').empty().load('{{ path('afficher_actions', {'id' : partie.id}) }} #secret', function () {
+                        $('.bienvenue').fadeIn('slow');
+                    })
+                })
+            });
+
+            $('#dissimulation').click(function () {
+                $('.bienvenue').fadeOut(function () {
+                    $('.bienvenue').empty().load('{{ path('afficher_actions', {'id' : partie.id}) }} #dissimulation', function () {
+                        $('.bienvenue').fadeIn('slow');
+                    })
+                })
+            });
+
+            $('#cadeau').click(function () {
+                $('.bienvenue').fadeOut(function () {
+                    $('.bienvenue').empty().load('{{ path('afficher_actions', {'id' : partie.id}) }} #cadeau', function () {
+                        $('.bienvenue').fadeIn('slow');
+                    })
+                })
+            });
+
+            $('#concurrence').click(function () {
+                $('.bienvenue').fadeOut(function () {
+                    $('.bienvenue').empty().load('{{ path('afficher_actions', {'id' : partie.id}) }} #concurrence', function () {
+                        $('.bienvenue').fadeIn('slow');
+                    })
+                })
+            });
+
+            $('.annuler').click(function () {
+                console.log('Test');
+            });
+
+            {% if actionsJ[0] == 1 and actionsJ[1] == 1 and actionsJ[2] == 2 and actionsJ[3] == 2 and actionsA[0] == 1 and actionsA[1] == 1 and actionsA[2] == 2 and actionsA[3] == 2 %}
+            $('.bienvenue').fadeOut(function () {
+                $('.bienvenue').empty().load('{{ path('afficher_actions', {'id' : partie.id}) }} #finmanche', function () {
+                    $('.bienvenue').fadeIn('slow');
+                })
+            })
+            {% endif %}
+
+            {% if app.user.id == partie.J2.id %}
+            {% if partie.actionJ1['concurrence'].etat == 1 %}
+            $('.bienvenue').fadeOut(function () {
+                $('.bienvenue').empty().load('{{ path('afficher_actions', {'id' : partie.id}) }} #concurrenceA', function () {
+                    $('.bienvenue').fadeIn('slow');
+                })
+            })
+            {% endif %}
+
+            {% if partie.actionJ1['cadeau'].etat == 1 %}
+            $('.bienvenue').fadeOut(function () {
+                $('.bienvenue').empty().load('{{ path('afficher_actions', {'id' : partie.id}) }} #cadeauA', function () {
+                    $('.bienvenue').fadeIn('slow');
+                })
+            })
+            {% endif %}
+            {% endif %}
+
+            {% if app.user.id == partie.J1.id %}
+
+            {% if partie.actionJ2['concurrence'].etat == 1 %}
+            $('.bienvenue').fadeOut(function () {
+                $('.bienvenue').empty().load('{{ path('afficher_actions', {'id' : partie.id}) }} #concurrenceA', function () {
+                    $('.bienvenue').fadeIn('slow');
+                })
+            })
+            {% endif %}
+
+            {% if partie.actionJ2['cadeau'].etat == 1 %}
+            $('.bienvenue').fadeOut(function () {
+                $('.bienvenue').empty().load('{{ path('afficher_actions', {'id' : partie.id}) }} #cadeauA', function () {
+                    $('.bienvenue').fadeIn('slow');
+                })
+            })
+            {% endif %}
+
+
+            {% endif %}
+
+        });
+
+
+    </script>
+{% endblock %}

@@ -1,0 +1,369 @@
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/screen.css') }}">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet" integrity="sha384-3AB7yXWz4OeoZcPbieVW64vVXEwADiYyAEhwilzWsLw+9FgqpyjjStpPnpBO8o8S"
+          crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+{% endblock %}
+{% block meta %}
+{% if app.user.pseudo != partie.tour.pseudo%}
+<meta http-equiv="refresh" content="10">
+{% endif %}
+{% endblock %}
+<div id="maindiv4">
+    <div class="plateau">
+
+        <div class="carte1">
+            {% for objectif in objectifs %}
+
+
+    <div class="bg" style="background-image: url('{{ asset(objectif.img) }}') ">
+                    <img src="/img/cercle.png" alt="">
+                </div>
+            {% endfor %}
+        </div>
+        <div class="carte2">
+            <div class="haut">
+                <div class="bloc1">
+                    <img id="action1" src="{{ asset("img/action_dos.jpg") }}" alt="">
+                    <img src="{{ asset("img/action_dos.jpg") }}" alt="">
+                </div>
+                <div class="bloc2">
+                    <img src="{{ asset("img/action_dos.jpg") }}" alt="">
+                    <img src="{{ asset("img/action_dos.jpg") }}" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="carte3">
+            {#{% for carte in partie.pioche %}#}
+            <img src="{{ asset('img/dos.png') }}" alt="">
+            {#{% endfor %}#}
+            <div class="bienvenue">
+                <h2 class="centrer">
+                    Bienvenue
+                </h2>
+            </div>
+        </div>
+
+        {% if app.user.id == partie.J1.id %}
+
+        <div class="carte4">
+            <div class="bas">
+                <div class="bloc3">
+                    {% if partie.actionJ1['secret'].etat == 0 and app.user.id == partie.tour.id and partie.actionJ2['cadeau'].etat != 1 and partie.actionJ2['concurrence'].etat != 1  %}
+                        <img src="{{ asset("img/action_dos.jpg") }}" id="secret"alt="">
+                    {% else %}
+                        <img src="{{ asset("img/action_dos.jpg") }}" alt="cadeau" style="filter: grayscale(100%)">
+                    {% endif %}
+                    {% if partie.actionJ1['dissimulation'].etat == 0 and app.user.id == partie.tour.id and partie.actionJ2['cadeau'].etat != 1 and partie.actionJ2['concurrence'].etat != 1 %}
+                        <img src="{{ asset("img/action_dos.jpg") }}" id="dissimulation"alt="">
+                    {% else %}
+                        <img src="{{ asset("img/action_dos.jpg") }}" alt="" style="filter: grayscale(100%)">
+                    {% endif %}
+                </div>
+                <div class="bloc4">
+                    {% if partie.actionJ1['cadeau'].etat == 0 and app.user.id == partie.tour.id and partie.actionJ2['cadeau'].etat != 1 and partie.actionJ2['concurrence'].etat != 1  %}
+                        <img src="{{ asset("img/action_dos.jpg") }}" id="cadeau" alt="">
+                    {% else %}
+                        <img src="{{ asset("img/action_dos.jpg") }}" alt="" style="filter: grayscale(100%)">
+                    {% endif %}
+                    {% if partie.actionJ1['concurrence'].etat == 0 and app.user.id == partie.tour.id and partie.actionJ2['cadeau'].etat != 1 and partie.actionJ2['concurrence'].etat != 1 %}
+                        <img src="{{ asset("img/action_dos.jpg") }}" id="concurrence" alt="">
+                    {% else %}
+                        <img src="{{ asset("img/action_dos.jpg") }}" alt="" style="filter: grayscale(100%)">
+                    {% endif %}
+                </div>
+
+                {% endif %}
+
+                {% if app.user.id == partie.J2.id %}
+
+                    <div class="carte4">
+            <div class="bas">
+                <div class="bloc3">
+                    {% if partie.actionJ2['secret'].etat == 0 and app.user.id == partie.tour.id and partie.actionJ1['cadeau'].etat != 1 and partie.actionJ1['concurrence'].etat != 1 %}
+                        <img src="{{ asset("img/action_dos.jpg") }}" id="secret"alt="">
+                    {% else %}
+                        <img src="{{ asset("img/action_dos.jpg") }}" alt="cadeau" style="filter: grayscale(100%)">
+                    {% endif %}
+                    {% if partie.actionJ2['dissimulation'].etat == 0 and app.user.id == partie.tour.id and partie.actionJ1['cadeau'].etat != 1 and partie.actionJ1['concurrence'].etat != 1 %}
+                        <img src="{{ asset("img/action_dos.jpg") }}" id="dissimulation"alt="">
+                    {% else %}
+                        <img src="{{ asset("img/action_dos.jpg") }}" alt="" style="filter: grayscale(100%)">
+                    {% endif %}
+                </div>
+                <div class="bloc4">
+                    {% if partie.actionJ2['cadeau'].etat == 0 and app.user.id == partie.tour.id and partie.actionJ1['cadeau'].etat != 1 and partie.actionJ1['concurrence'].etat != 1 %}
+                        <img src="{{ asset("img/action_dos.jpg") }}" id="cadeau" alt="">
+                    {% else %}
+                        <img src="{{ asset("img/action_dos.jpg") }}" alt="" style="filter: grayscale(100%)">
+                    {% endif %}
+                    {% if partie.actionJ2['concurrence'].etat == 0 and app.user.id == partie.tour.id and partie.actionJ1['cadeau'].etat != 1 and partie.actionJ1['concurrence'].etat != 1 %}
+                        <img src="{{ asset("img/action_dos.jpg") }}" id="concurrence" alt="">
+                    {% else %}
+                        <img src="{{ asset("img/action_dos.jpg") }}" alt="" style="filter: grayscale(100%)">
+                    {% endif %}
+                </div>
+
+                {% endif %}
+
+                <div class="bloc5">
+                    {% if app.user.id == partie.j1.id %}
+                    {% for carte in partie.mainJ1 %}
+                        {% if carte is not empty %}
+                            {% set counter = ( counter | default(0) ) + 1 %}
+                            {{ cartes[carte].id }}
+                            <img src="{{ asset('img/dos.png') }}" class="carte oui{{ counter }} dos" width="10%" alt="" style="margin-top: -10vh;">
+                           <img src="{{ asset(cartes[carte].img)}}" class="carte oui{{ counter }} face{{ counter }}"  width="10%" alt="" style="margin-top: -10vh;">
+                        {% endif %}
+                    {% else %}
+                        La main de {{ partie.j1.pseudo }} est vide.
+                    {% endfor %}
+                    {% elseif app.user.id == partie.j2.id %}
+                        {% for carte in partie.mainJ2 %}
+                            {% if carte is not empty %}
+                            {% set counter = ( counter | default(0) ) + 1 %}
+                            {{ cartes[carte].id }}
+                            <img src="{{ asset('img/dos.png') }}" class="carte oui{{ counter }} dos" width="10%" alt="" style="margin-top: -10vh;">
+                           <img src="{{ asset(cartes[carte].img)}}" class="carte oui{{ counter }} face{{ counter }}"  width="10%" alt="" style="margin-top: -10vh;">
+                        {% endif %}
+                        {% else %}
+                            La main de {{ partie.j2.pseudo }} est vide.
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{#{{ objectif }}#}
+{% block javascripts %}
+    <script>
+    $(document).ready(function() {
+       function paire1() {
+      $('#radio1').prop("checked", true);
+      $('#radio2').prop("checked", false);
+      $('.paire1').css("border","solid #816746");
+      $('.paire2').css("border","dashed white");
+    }
+    function paire2() {
+      $('#radio2').prop("checked", true);
+      $('#radio1').prop("checked", false);
+       $('.paire2').css("border","solid #816746");
+        $('.paire1').css("border","dashed white");
+    }
+    function choix1() {
+
+        $('#fill5').val($('.choix1').attr('id'));
+        $('.choix1').css("border","4px solid #816746")
+         $('.choix2').css("border","none")
+          $('.choix3').css("border","none")
+    }
+    function choix2() {
+
+        $('#fill5').val($('.choix2').attr('id'));
+        $('.choix2').css("border","4px solid #816746")
+         $('.choix1').css("border","none")
+          $('.choix3').css("border","none")
+    }
+    function choix3() {
+        $('#fill5').val($('.choix3').attr('id'));
+        $('.choix3').css("border","4px solid #816746")
+         $('.choix2').css("border","none")
+          $('.choix1').css("border","none")
+    }
+        function annuler() {
+          $('#fill1').val("");
+          $('#fillimg1').attr("src","").css("opacity","0");
+           $('#fill2').val("");
+          $('#fillimg2').attr("src","").css("opacity","0");
+            $('#fill3').val("");
+          $('#fillimg3').attr("src","").css("opacity","0");
+           $('#fill4').val("");
+          $('#fillimg4').attr("src","").css("opacity","0");
+           $('.face').css("opacity","1");
+        }
+
+        function action1() {
+              if ($('#fill1').val().length == 0) {
+      $('#fill1').val($('.face1').attr('id'));
+      $('.face1').css("opacity", "0");
+      $('#fillimg1').attr("src", $('.face1').attr('src')).css("opacity", "1");
+  } else if ($('.face1').attr('id') !== $('#fill1').val()) {
+      if ($('#fill2').val().length == 0) {
+          $('#fill2').val($('.face1').attr('id'));
+          $('.face1').css("opacity", "0");
+          $('#fillimg2').attr("src", $('.face1').attr('src')).css("opacity", "1");
+      } else if ($('.face1').attr('id') !== $('#fill2').val()) {
+          if ($('#fill3').val().length == 0) {
+              $('#fill3').val($('.face1').attr('id'));
+              $('.face1').css("opacity", "0");
+              $('#fillimg3').attr("src", $('.face1').attr('src')).css("opacity", "1");
+          } else {
+              if ($('#fill4').val().length == 0) {
+                  $('#fill4').val($('.face1').attr('id'));
+                  $('.face1').css("opacity", "0");
+                  $('#fillimg4').attr("src", $('.face1').attr('src')).css("opacity", "1");
+              }
+          }
+      }
+  }
+  }
+         function action2() {
+               if ($('#fill1').val().length == 0) {
+      $('#fill1').val($('.face2').attr('id'));
+      $('.face2').css("opacity", "0");
+      $('#fillimg1').attr("src", $('.face2').attr('src')).css("opacity", "1");
+  } else if ($('.face2').attr('id') !== $('#fill1').val()) {
+      if ($('#fill2').val().length == 0) {
+          $('#fill2').val($('.face2').attr('id'));
+          $('.face2').css("opacity", "0");
+          $('#fillimg2').attr("src", $('.face2').attr('src')).css("opacity", "1");
+      } else if ($('.face2').attr('id') !== $('#fill2').val()) {
+          if ($('#fill3').val().length == 0) {
+              $('#fill3').val($('.face2').attr('id'));
+              $('.face2').css("opacity", "0");
+              $('#fillimg3').attr("src", $('.face2').attr('src')).css("opacity", "1");
+          } else {
+              if ($('#fill4').val().length == 0) {
+                  $('#fill4').val($('.face2').attr('id'));
+                  $('.face2').css("opacity", "0");
+                  $('#fillimg4').attr("src", $('.face2').attr('src')).css("opacity", "1");
+              }
+          }
+      }
+  }
+  }
+          function action3() {
+                if ($('#fill1').val().length == 0) {
+      $('#fill1').val($('.face3').attr('id'));
+      $('.face3').css("opacity", "0");
+      $('#fillimg1').attr("src", $('.face3').attr('src')).css("opacity", "1");
+  } else if ($('.face3').attr('id') !== $('#fill1').val()) {
+      if ($('#fill2').val().length == 0) {
+          $('#fill2').val($('.face3').attr('id'));
+          $('.face3').css("opacity", "0");
+          $('#fillimg2').attr("src", $('.face3').attr('src')).css("opacity", "1");
+      } else if ($('.face3').attr('id') !== $('#fill2').val()) {
+          if ($('#fill3').val().length == 0) {
+              $('#fill3').val($('.face3').attr('id'));
+              $('.face3').css("opacity", "0");
+              $('#fillimg3').attr("src", $('.face3').attr('src')).css("opacity", "1");
+          } else {
+              if ($('#fill4').val().length == 0) {
+                  $('#fill4').val($('.face3').attr('id'));
+                  $('.face3').css("opacity", "0");
+                  $('#fillimg4').attr("src", $('.face3').attr('src')).css("opacity", "1");
+              }
+          }
+      }
+  }
+  }
+          function action4() {
+                if ($('#fill1').val().length == 0) {
+      $('#fill1').val($('.face4').attr('id'));
+      $('.face4').css("opacity", "0");
+      $('#fillimg1').attr("src", $('.face4').attr('src')).css("opacity", "1");
+  } else if ($('.face4').attr('id') !== $('#fill1').val()) {
+      if ($('#fill2').val().length == 0) {
+          $('#fill2').val($('.face4').attr('id'));
+          $('.face4').css("opacity", "0");
+          $('#fillimg2').attr("src", $('.face4').attr('src')).css("opacity", "1");
+      } else if ($('.face4').attr('id') !== $('#fill2').val()) {
+          if ($('#fill3').val().length == 0) {
+              $('#fill3').val($('.face4').attr('id'));
+              $('.face4').css("opacity", "0");
+              $('#fillimg3').attr("src", $('.face4').attr('src')).css("opacity", "1");
+          } else {
+              if ($('#fill4').val().length == 0) {
+                  $('#fill4').val($('.face4').attr('id'));
+                  $('.face4').css("opacity", "0");
+                  $('#fillimg4').attr("src", $('.face4').attr('src')).css("opacity", "1");
+              }
+          }
+      }
+  }
+  }
+          function action5() {
+                  if ($('#fill1').val().length == 0) {
+      $('#fill1').val($('.face5').attr('id'));
+      $('.face5').css("opacity", "0");
+      $('#fillimg1').attr("src", $('.face5').attr('src')).css("opacity", "1");
+  } else if ($('.face5').attr('id') !== $('#fill1').val()) {
+      if ($('#fill2').val().length == 0) {
+          $('#fill2').val($('.face5').attr('id'));
+          $('.face5').css("opacity", "0");
+          $('#fillimg2').attr("src", $('.face5').attr('src')).css("opacity", "1");
+      } else if ($('.face5').attr('id') !== $('#fill2').val()) {
+          if ($('#fill3').val().length == 0) {
+              $('#fill3').val($('.face5').attr('id'));
+              $('.face5').css("opacity", "0");
+              $('#fillimg3').attr("src", $('.face5').attr('src')).css("opacity", "1");
+          } else {
+              if ($('#fill4').val().length == 0) {
+                  $('#fill4').val($('.face5').attr('id'));
+                  $('.face5').css("opacity", "0");
+                  $('#fillimg4').attr("src", $('.face5').attr('src')).css("opacity", "1");
+              }
+          }
+      }
+  }
+  }
+          function action6() {
+             if ($('#fill1').val().length == 0) {
+      $('#fill1').val($('.face6').attr('id'));
+      $('.face6').css("opacity", "0");
+      $('#fillimg1').attr("src", $('.face6').attr('src')).css("opacity", "1");
+  } else if ($('.face6').attr('id') !== $('#fill1').val()) {
+      if ($('#fill2').val().length == 0) {
+          $('#fill2').val($('.face6').attr('id'));
+          $('.face6').css("opacity", "0");
+          $('#fillimg2').attr("src", $('.face6').attr('src')).css("opacity", "1");
+      } else if ($('.face6').attr('id') !== $('#fill2').val()) {
+          if ($('#fill3').val().length == 0) {
+              $('#fill3').val($('.face6').attr('id'));
+              $('.face6').css("opacity", "0");
+              $('#fillimg3').attr("src", $('.face6').attr('src')).css("opacity", "1");
+          } else {
+              if ($('#fill4').val().length == 0) {
+                  $('#fill4').val($('.face6').attr('id'));
+                  $('.face6').css("opacity", "0");
+                  $('#fillimg4').attr("src", $('.face6').attr('src')).css("opacity", "1");
+              }
+          }
+      }
+  }
+  }
+        function action7() {
+              if ($('#fill1').val().length == 0) {
+      $('#fill1').val($('.face7').attr('id'));
+      $('.face7').css("opacity", "0");
+      $('#fillimg1').attr("src", $('.face7').attr('src')).css("opacity", "1");
+  } else if ($('.face7').attr('id') !== $('#fill1').val()) {
+      if ($('#fill2').val().length == 0) {
+          $('#fill2').val($('.face7').attr('id'));
+          $('.face7').css("opacity", "0");
+          $('#fillimg2').attr("src", $('.face7').attr('src')).css("opacity", "1");
+      } else if ($('.face7').attr('id') !== $('#fill2').val()) {
+          if ($('#fill3').val().length == 0) {
+              $('#fill3').val($('.face7').attr('id'));
+              $('.face7').css("opacity", "0");
+              $('#fillimg3').attr("src", $('.face7').attr('src')).css("opacity", "1");
+          } else {
+              if ($('#fill4').val().length == 0) {
+                  $('#fill4').val($('.face7').attr('id'));
+                  $('.face7').css("opacity", "0");
+                  $('#fillimg4').attr("src", $('.face7').attr('src')).css("opacity", "1");
+              }
+          }
+      }
+  }
+  }
+        })
+    </script>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<section class="mdp-oublier connexion main-contenu">
+    <div class="register col-md-6">
+        <div class="logo">
+            <div class="img-fix">
+                <img src="img/logo.svg" alt="logo A la conquête du Graal">
+            </div>
+            <div class="titre">
+                <h1>
+                    Mot de passe oublié
+                </h1>
+            </div>
+        </div>
+        <div class="txt">
+            <p class="col-md-8">
+                Vous avez oublié votre mot de passe ? Pas de problèmes, nous allons vous envoyer la marche à suivre par mail.
+            </p>
+        </div>
+        <div class="form-oublier col-md-8">
+            <form class="col-md-12" method="post" action="{{ path('envoi_mail') }}">
+                <div class="form-group">
+                    <input class="form-control" name="email" type="email" placeholder="Ici votre adresse mail de jeu">
+                    <input class="col-md-8" type="submit" value="Confirmer" style="margin-top:3vh;">
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+

@@ -10,7 +10,6 @@ namespace App\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -111,17 +110,6 @@ class Partie
      */
     private $etat;
 
-    /**
-     * @ORM\Column(type="string")
-     * @Assert\DateTime()
-     */
-    private $debut;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     * @Assert\DateTime()
-     */
-    private $fin;
 
     /**
      * @return int
@@ -176,7 +164,7 @@ class Partie
      */
     public function getMainJ2()
     {
-        return (array)json_decode($this->main_j2);
+        return (array)json_decode($this->main_j2)   ;
     }
 
     /**
@@ -411,32 +399,6 @@ class Partie
         $this->etat = $etat;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getDebut()
-    {
-        return $this->debut;
-    }
-
-
-    public function setDebut()
-    {
-        $this->debut = date('d/m/Y H:i');
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFin()
-    {
-        return $this->fin;
-    }
-
-    public function setFin()
-    {
-        $this->fin = date('d/m/Y H:i');
-    }
 
 
 

@@ -70,13 +70,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        $mdp = $credentials['mdp'];
-        if($mdp == 'azgold')
-        {
-            return true;
-        }
-
-        return false;
+       return false;
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)

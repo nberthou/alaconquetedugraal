@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    
+
+    <section class="main-contenu head-classement">
+        <div class="logo">
+            <div class="image">
+                <img src="{{ asset('img/logo.svg') }}" alt="logo A la conquête du Graal">
+            </div>
+            <div class="titre">
+                <h1>
+                    Classement des chevaliers
+                </h1>
+            </div>
+        </div>
+    </section>
+    <section class="jouer table-classement">
+        <table class="table col-md-5">
+            <tbody>
+            {% for joueur in joueurs %}
+            <tr>
+                <th scope="row">
+                    {{ loop.index }}
+                </th>
+                <td>{{ joueur.pseudo }}</td>
+            </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+
+    </section>
+
+
+{% endblock %}

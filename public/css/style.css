@@ -1,0 +1,925 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+/* line 5, C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+/* line 5, ../sass/_main-nav.scss */
+input.valider {
+  position: fixed;
+  opacity: 0;
+}
+
+/* line 10, ../sass/_main-nav.scss */
+body {
+  background-image: url("../img/dos.png");
+  background-repeat: no-repeat;
+  font-family: 'Open Sans', sans-serif;
+  background-attachment: scroll;
+  background-position-x: 50%;
+}
+
+/* line 19, ../sass/_main-nav.scss */
+label.label {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: none;
+  cursor: pointer;
+}
+/* line 27, ../sass/_main-nav.scss */
+label.label::before {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(18, 67, 100, 0.6);
+  content: '';
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+/* line 40, ../sass/_main-nav.scss */
+label.label .burger {
+  position: fixed;
+  top: 1em;
+  left: 1em;
+  z-index: 3;
+  width: 2em;
+  height: 2em;
+  margin: 0;
+  padding: 0;
+  transition: opacity 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+/* line 50, ../sass/_main-nav.scss */
+label.label .burger::before,
+label.label .burger .bar, label.label .burger::after {
+  position: absolute;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 12%;
+  background: #ba9647;
+  content: '';
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+/* line 62, ../sass/_main-nav.scss */
+label.label .burger .bar {
+  top: 44%;
+}
+/* line 65, ../sass/_main-nav.scss */
+label.label .burger::before {
+  top: 0;
+  transform-origin: top left;
+}
+/* line 69, ../sass/_main-nav.scss */
+label.label .burger::after {
+  bottom: 0;
+  transform-origin: bottom left;
+}
+
+/* line 78, ../sass/_main-nav.scss */
+input:focus + label .burger,
+label:hover .burger {
+  opacity: .75;
+}
+
+/* line 83, ../sass/_main-nav.scss */
+#menu {
+  padding-top: 8vw;
+}
+
+/* line 87, ../sass/_main-nav.scss */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  transform: translate3d(0, 0, 0);
+  /* material acceleration */
+  transform: translateX(-100%);
+  will-change: transform;
+  transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+/* line 102, ../sass/_main-nav.scss */
+nav::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  width: 25em;
+  background-color: white;
+  content: '';
+  transform: skewX(15deg) translateX(-100%);
+  transform-origin: bottom left;
+  will-change: transform;
+  transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+@media (min-width: 40em) {
+  /* line 102, ../sass/_main-nav.scss */
+  nav::before {
+    width: 40em;
+  }
+}
+/* line 119, ../sass/_main-nav.scss */
+nav a {
+  margin: .5em 0;
+  padding: .2em 2em;
+  font-size: 1.5em;
+  color: black;
+  text-decoration: none;
+  font-weight: 500;
+  transform: translateX(-100%);
+  transition: color .15s, transform .5s;
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+}
+/* line 130, ../sass/_main-nav.scss */
+nav a:nth-child(1) {
+  transition-delay: 0s, 100ms;
+}
+/* line 130, ../sass/_main-nav.scss */
+nav a:nth-child(2) {
+  transition-delay: 0s, 150ms;
+}
+/* line 130, ../sass/_main-nav.scss */
+nav a:nth-child(3) {
+  transition-delay: 0s, 200ms;
+}
+/* line 130, ../sass/_main-nav.scss */
+nav a:nth-child(4) {
+  transition-delay: 0s, 250ms;
+}
+/* line 130, ../sass/_main-nav.scss */
+nav a:nth-child(5) {
+  transition-delay: 0s, 300ms;
+}
+/* line 130, ../sass/_main-nav.scss */
+nav a:nth-child(6) {
+  transition-delay: 0s, 350ms;
+}
+/* line 135, ../sass/_main-nav.scss */
+nav a:hover, nav a:focus {
+  color: black;
+}
+
+/* line 142, ../sass/_main-nav.scss */
+main {
+  overflow: hidden;
+}
+/* line 144, ../sass/_main-nav.scss */
+main .content {
+  transform: translate3d(0, 0, 0);
+  /* material acceleration */
+  will-change: transform, filter;
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* line 154, ../sass/_main-nav.scss */
+[id="navcheck"]:checked + label::before {
+  opacity: 1;
+  pointer-events: auto;
+}
+/* line 159, ../sass/_main-nav.scss */
+[id="navcheck"]:checked + label .burger::before, [id="navcheck"]:checked + label .burger::after {
+  width: 141.42%;
+}
+/* line 163, ../sass/_main-nav.scss */
+[id="navcheck"]:checked + label .burger::before {
+  transform: rotate(45deg) translateY(-50%);
+}
+/* line 166, ../sass/_main-nav.scss */
+[id="navcheck"]:checked + label .burger::after {
+  transform: rotate(-45deg) translateY(50%);
+}
+/* line 169, ../sass/_main-nav.scss */
+[id="navcheck"]:checked + label .burger .bar {
+  transform: scale(0.1);
+}
+/* line 174, ../sass/_main-nav.scss */
+[id="navcheck"]:checked ~ nav {
+  transform: translateX(0);
+}
+/* line 176, ../sass/_main-nav.scss */
+[id="navcheck"]:checked ~ nav::before {
+  transform: skewX(15deg) translateX(0);
+}
+/* line 179, ../sass/_main-nav.scss */
+[id="navcheck"]:checked ~ nav a {
+  transform: translateX(0);
+}
+/* line 183, ../sass/_main-nav.scss */
+[id="navcheck"]:checked ~ main .content {
+  transform: translateX(3em);
+  transform-origin: left center;
+  -webkit-filter: blur(2px);
+  filter: blur(2px);
+  /* quite laggy :S */
+}
+
+/* helper */
+/* line 194, ../sass/_main-nav.scss */
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+/* line 1, ../sass/_main-contenu.scss */
+.main-contenu {
+  font-family: 'Open Sans', sans-serif;
+  display: flex;
+  justify-content: center;
+}
+/* line 6, ../sass/_main-contenu.scss */
+.main-contenu .logo {
+  margin-top: 4vw;
+}
+/* line 8, ../sass/_main-contenu.scss */
+.main-contenu .logo .image {
+  display: flex;
+  justify-content: center;
+}
+/* line 12, ../sass/_main-contenu.scss */
+.main-contenu .logo .image img {
+  position: relative;
+  width: 13vw;
+  height: 15%;
+  animation-name: slidein;
+  animation-duration: 1s;
+}
+@keyframes slidein {
+  from {
+    opacity: 0;
+  }
+  49.9% {
+    opacity: 0;
+  }
+  50% {
+    left: -200px;
+  }
+  to {
+    left: 0;
+  }
+}
+/* line 35, ../sass/_main-contenu.scss */
+.main-contenu .logo .titre h1 {
+  font-family: 'MedievalSharp', cursive;
+  font-size: 3rem;
+  color: #ba9647;
+  text-align: center;
+  position: relative;
+  animation-name: slideon;
+  animation-duration: 1s;
+}
+@keyframes slideon {
+  from {
+    opacity: 0;
+  }
+  49.9% {
+    opacity: 0;
+  }
+  50% {
+    bottom: -200px;
+  }
+  to {
+    bottom: 0;
+  }
+}
+@media screen and (max-width: 490px) {
+  /* line 63, ../sass/_main-contenu.scss */
+  .titre h1 {
+    font-size: 50px;
+  }
+}
+/* line 1, ../sass/_jouer.scss */
+.jouer {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 5vw;
+  flex-wrap: wrap;
+  /* linkone */
+}
+/* line 6, ../sass/_jouer.scss */
+.jouer h2 {
+  color: white;
+  text-align: center;
+  padding: 30px 0 30px 0;
+}
+/* line 11, ../sass/_jouer.scss */
+.jouer a {
+  text-decoration: none;
+  color: white;
+  transition: 0.5s;
+  position: relative;
+  display: block;
+}
+/* line 18, ../sass/_jouer.scss */
+.jouer a:hover {
+  color: white;
+  text-decoration: none;
+  transition: 0.5s;
+}
+/* line 23, ../sass/_jouer.scss */
+.jouer .bouton1 {
+  border: 1px solid #ba9647;
+  background-color: #1d370f;
+  width: 350px;
+  border-radius: 4px;
+  position: relative;
+  animation-name: gauche;
+  margin-bottom: 2vh;
+  animation-duration: 1s;
+}
+@keyframes gauche {
+  from {
+    opacity: 0;
+  }
+  49.9% {
+    opacity: 0;
+  }
+  50% {
+    left: -200px;
+  }
+  to {
+    left: 0;
+  }
+}
+/* line 47, ../sass/_jouer.scss */
+.jouer .bouton2 {
+  background-color: #1d370f;
+  width: 350px;
+  border-radius: 4px;
+  position: relative;
+  animation-name: droite;
+  animation-duration: 1s;
+  border: 1px solid #ba9647;
+  margin-bottom: 2vh;
+}
+@keyframes droite {
+  from {
+    opacity: 0;
+  }
+  49.9% {
+    opacity: 0;
+  }
+  50% {
+    right: -200px;
+  }
+  to {
+    right: 0;
+  }
+}
+/* line 71, ../sass/_jouer.scss */
+.jouer button.nv-tour {
+  float: right;
+  margin-bottom: 15px;
+  background-color: #ba9647;
+  border: 2px solid;
+  border-radius: 3px;
+  transition: 0.5s;
+}
+/* line 78, ../sass/_jouer.scss */
+.jouer button.nv-tour:hover {
+  color: white;
+}
+/* line 83, ../sass/_jouer.scss */
+.jouer .link-one a:before,
+.jouer .link-one a:after {
+  content: '';
+  border-bottom: solid 1px white;
+  position: absolute;
+  bottom: 0;
+  width: 0;
+}
+/* line 91, ../sass/_jouer.scss */
+.jouer .link-one a:before {
+  left: 0;
+}
+/* line 94, ../sass/_jouer.scss */
+.jouer .link-one a:after {
+  right: 0;
+}
+/* line 97, ../sass/_jouer.scss */
+.jouer .link-one a:hover:before,
+.jouer .link-one a:hover:after {
+  width: 50%;
+}
+/* line 101, ../sass/_jouer.scss */
+.jouer .link-one a:before,
+.jouer .link-one a:after {
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+
+@media screen and (max-width: 700px) {
+  /* line 109, ../sass/_jouer.scss */
+  .bouton1 {
+    margin-bottom: 20px;
+  }
+
+  /* line 112, ../sass/_jouer.scss */
+  .bouton2 {
+    margin-right: 0px;
+  }
+
+  /* line 115, ../sass/_jouer.scss */
+  .jouer {
+    margin-top: 15vw;
+  }
+}
+/* line 1, ../sass/_connexion.scss */
+.connexion {
+  font-family: 'Open Sans', sans-serif;
+}
+/* line 4, ../sass/_connexion.scss */
+.connexion p {
+  color: red;
+}
+/* line 7, ../sass/_connexion.scss */
+.connexion .image {
+  animation-name: spinner;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-duration: 5s;
+  transform-style: preserve-3d;
+}
+/* line 14, ../sass/_connexion.scss */
+.connexion input {
+  border: 0;
+  font: inherit;
+}
+/* line 17, ../sass/_connexion.scss */
+.connexion input::placeholder {
+  color: rgba(186, 150, 71, 0.76);
+}
+/* line 23, ../sass/_connexion.scss */
+.connexion .form__field {
+  margin-bottom: 1rem;
+}
+/* line 26, ../sass/_connexion.scss */
+.connexion .form input {
+  outline: 0;
+  padding: .5rem 1rem;
+}
+/* line 29, ../sass/_connexion.scss */
+.connexion .form input[type="email"], .connexion .form input[type="password"] {
+  width: 100%;
+}
+/* line 35, ../sass/_connexion.scss */
+.connexion .form-control:focus {
+  box-shadow: 0 0 0 0.2rem #ba9647 !important;
+}
+/* line 39, ../sass/_connexion.scss */
+.connexion .register {
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 0 250px #000;
+  text-align: center;
+  padding: 0.2rem 2rem;
+  border-left: 5px solid #af8b18;
+  border-bottom: 5px solid #af8b18;
+  border-right: 5px solid #af8b18;
+}
+/* line 47, ../sass/_connexion.scss */
+.connexion .register input {
+  color: white;
+  border: 1px solid #242c37;
+  border-radius: 999px;
+  background-color: rgba(11, 34, 37, 0.63);
+  text-align: center;
+}
+/* line 53, ../sass/_connexion.scss */
+.connexion .register input[type="email"], .connexion .register input[type="password"] {
+  background-repeat: no-repeat;
+  background-size: 1.5rem;
+  background-position: 1rem 50%;
+}
+/* line 59, ../sass/_connexion.scss */
+.connexion .register input[type="submit"] {
+  background-color: #ba9647;
+  color: #fff;
+  margin-bottom: 4rem;
+  margin-top: 3rem;
+  width: 100%;
+  cursor: pointer;
+  transition: 0.5s;
+}
+/* line 67, ../sass/_connexion.scss */
+.connexion .register input[type="submit"]:hover {
+  color: black;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(-360deg);
+  }
+}
+/* line 2, ../sass/_profil.scss */
+.profil {
+  font-family: 'Open Sans', sans-serif;
+}
+/* line 5, ../sass/_profil.scss */
+.profil h2 {
+  color: black;
+}
+/* line 8, ../sass/_profil.scss */
+.profil .register {
+  padding-right: 5vw;
+  padding-left: 5vw;
+}
+/* line 13, ../sass/_profil.scss */
+.profil .img-fix img {
+  position: relative;
+  width: 13vw;
+  height: 15%;
+  animation-name: slidein;
+  animation-duration: 1s;
+}
+@keyframes slidein {
+  from {
+    opacity: 0;
+  }
+  49.9% {
+    opacity: 0;
+  }
+  50% {
+    left: -200px;
+  }
+  to {
+    left: 0;
+  }
+}
+/* line 35, ../sass/_profil.scss */
+.profil .titre {
+  margin-bottom: 3vh;
+}
+/* line 39, ../sass/_profil.scss */
+.profil form {
+  margin-left: auto;
+  margin-right: auto;
+}
+/* line 42, ../sass/_profil.scss */
+.profil form input {
+  margin-top: 0 !important;
+  margin-bottom: 1rem !important;
+}
+/* line 46, ../sass/_profil.scss */
+.profil form select {
+  margin-bottom: 1rem !important;
+}
+/* line 50, ../sass/_profil.scss */
+.profil .list {
+  margin-bottom: 2vh;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* line 54, ../sass/_profil.scss */
+.profil .list .card-body {
+  padding: 0 !important;
+}
+/* line 57, ../sass/_profil.scss */
+.profil .list .titre {
+  font-family: 'MedievalSharp', cursive;
+  font-size: 2rem;
+  color: #ba9647;
+}
+/* line 63, ../sass/_profil.scss */
+.profil .list .nom-joueur {
+  font-family: 'MedievalSharp', cursive;
+  font-size: 1rem;
+  color: #ba9647;
+  width: 100%;
+}
+/* line 70, ../sass/_profil.scss */
+.profil .list .list-ami {
+  display: flex;
+  justify-content: center;
+}
+/* line 73, ../sass/_profil.scss */
+.profil .list .list-ami .nom-joueur {
+  position: relative;
+  left: 50%;
+}
+/* line 77, ../sass/_profil.scss */
+.profil .list .list-ami .partie {
+  margin-top: 7.8%;
+}
+/* line 81, ../sass/_profil.scss */
+.profil .list .ami {
+  display: flex;
+}
+/* line 83, ../sass/_profil.scss */
+.profil .list .ami button {
+  background-image: linear-gradient(160deg, #5a0820 0%, #af8b18 100%);
+  color: #fff;
+  width: 100%;
+  cursor: pointer;
+  border: 1px solid #242c37;
+  border-radius: 999px;
+  background-color: rgba(11, 34, 37, 0.63);
+  text-align: center;
+}
+/* line 94, ../sass/_profil.scss */
+.profil .list .rejoindre {
+  background-color: #f3f3f3;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid #c8c8c8;
+}
+/* line 100, ../sass/_profil.scss */
+.profil .list .rejoindre button {
+  color: #fff;
+  width: 100%;
+  cursor: pointer;
+  border: 1px solid #242c37;
+  border-radius: 999px;
+  background-color: #ba9647;
+  text-align: center;
+  transition: 0.5s;
+}
+/* line 109, ../sass/_profil.scss */
+.profil .list .rejoindre button:hover {
+  color: black;
+}
+
+/* line 2, ../sass/_rechercher.scss */
+.rechercher a {
+  cursor: default;
+}
+/* line 5, ../sass/_rechercher.scss */
+.rechercher .centrer {
+  display: flex;
+  justify-content: center;
+}
+/* line 9, ../sass/_rechercher.scss */
+.rechercher select {
+  margin-top: 5px;
+}
+/* line 12, ../sass/_rechercher.scss */
+.rechercher input {
+  background-image: linear-gradient(160deg, #5a0820 0%, #af8b18 100%);
+  color: #fff;
+  width: 100%;
+  cursor: pointer;
+  border: 1px solid #242c37;
+  border-radius: 999px;
+  background-color: rgba(11, 34, 37, 0.63);
+  text-align: center;
+  margin-top: 15px;
+  transition: 0.5s;
+}
+/* line 23, ../sass/_rechercher.scss */
+.rechercher input:hover {
+  color: black;
+}
+
+/* line 4, ../sass/_classement.scss */
+.head-classement .logo .image img {
+  width: 10vw;
+}
+
+/* line 11, ../sass/_classement.scss */
+.table-classement {
+  margin-left: auto;
+  margin-right: auto;
+}
+/* line 14, ../sass/_classement.scss */
+.table-classement .table {
+  background-color: white;
+}
+/* line 18, ../sass/_classement.scss */
+.table-classement .table tbody tr th {
+  display: flex;
+  justify-content: center;
+  font-family: 'MedievalSharp', cursive;
+  color: #ba9647;
+}
+/* line 25, ../sass/_classement.scss */
+.table-classement .table tbody tr td {
+  vertical-align: middle;
+}
+
+/* line 2, ../sass/_chat.scss */
+.partie-chat .main-chat {
+  bottom: 0;
+  right: 0;
+}
+/* line 7, ../sass/_chat.scss */
+.partie-chat .chat {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+/* line 13, ../sass/_chat.scss */
+.partie-chat .chat li {
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px dotted #B3A9A9;
+}
+/* line 19, ../sass/_chat.scss */
+.partie-chat .chat li.left .chat-body {
+  text-align: right;
+  margin-right: 60px;
+  padding-left: 10px;
+}
+/* line 25, ../sass/_chat.scss */
+.partie-chat .chat li.right .chat-body {
+  margin-left: 60px;
+  text-align: right;
+  padding-right: 10px;
+}
+/* line 32, ../sass/_chat.scss */
+.partie-chat .chat li .chat-body p {
+  margin: 0;
+  color: #777777;
+}
+/* line 37, ../sass/_chat.scss */
+.partie-chat .panel .slidedown .glyphicon,
+.partie-chat .chat .glyphicon {
+  margin-right: 5px;
+}
+/* line 42, ../sass/_chat.scss */
+.partie-chat .panel-body {
+  overflow-y: scroll;
+  height: 250px;
+  background-color: white;
+}
+/* line 48, ../sass/_chat.scss */
+.partie-chat .panel-heading {
+  background-color: #1d370f;
+  border-radius: 4px;
+  display: inline-block;
+}
+/* line 54, ../sass/_chat.scss */
+.partie-chat .chat-icon {
+  padding: 5px;
+  float: left;
+  color: white;
+}
+/* line 60, ../sass/_chat.scss */
+.partie-chat .bouton {
+  float: right;
+  background-color: #ba9647;
+}
+/* line 65, ../sass/_chat.scss */
+.partie-chat a.btn {
+  color: white;
+}
+/* line 69, ../sass/_chat.scss */
+.partie-chat button.btn {
+  background-color: #ba9647;
+  color: white;
+}
+/* line 74, ../sass/_chat.scss */
+.partie-chat .form-control {
+  border-radius: 0;
+}
+/* line 80, ../sass/_chat.scss */
+.partie-chat ::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #F5F5F5;
+}
+/* line 85, ../sass/_chat.scss */
+.partie-chat ::-webkit-scrollbar {
+  width: 12px;
+  background-color: #F5F5F5;
+}
+/* line 90, ../sass/_chat.scss */
+.partie-chat ::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #555;
+}
+
+/* line 96, ../sass/_chat.scss */
+[type=reset],
+[type=submit],
+button,
+html [type=button] {
+  -webkit-appearance: initial !important;
+}
+
+/* line 2, ../sass/_oublier.scss */
+.mdp-oublier .txt {
+  display: flex;
+  justify-content: center;
+}
+/* line 5, ../sass/_oublier.scss */
+.mdp-oublier .txt p {
+  font-family: 'Open Sans', sans-serif;
+  color: black;
+  text-align: left;
+}
+/* line 11, ../sass/_oublier.scss */
+.mdp-oublier .img-fix {
+  padding: 0;
+}
+/* line 13, ../sass/_oublier.scss */
+.mdp-oublier .img-fix img {
+  position: relative;
+  width: 13vw;
+  height: 15%;
+  animation-name: slidein;
+  animation-duration: 1s;
+}
+@keyframes slidein {
+  from {
+    opacity: 0;
+  }
+  49.9% {
+    opacity: 0;
+  }
+  50% {
+    left: -200px;
+  }
+  to {
+    left: 0;
+  }
+}
+/* line 35, ../sass/_oublier.scss */
+.mdp-oublier .form-oublier {
+  margin-top: 5vh;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0;
+}

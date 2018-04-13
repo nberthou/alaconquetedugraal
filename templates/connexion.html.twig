@@ -1,28 +1,45 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}"> {% endblock %}
 
 {% block body %}
 
 
 
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+    <section class="connexion main-contenu">
+    <div class="register">
+        <div class="logo">
+            <div class="image">
+                <img src="{{ asset('img/logo.svg') }}" alt="logo A la conquête du Graal">
+            </div>
+            <div class="titre">
+                <h1>
+                    Connexion
+                </h1>
+            </div>
+        </div>
+        <!-- Form Connexion -->
+        <form class="form" action="{{ path('connexion') }}" method="post">
+            <div class="form__field">
+                <input class="form-control " id="pseudo" name="_username" type="text" value="{{ username }}" placeholder="Pseudo" required="required">
+            </div>
+
+            <div class="form__field">
+                <input class="form-control" id="mdp" name="_password" type="password" placeholder="Mot de passe" required="required">
+            </div>
+
+            <div class="form__field">
+                <input type="submit" value="Connexion">
+            </div>
+        </form>
+
+        <p>Toujours pas de compte ?
+            <a href="{{ path('inscription') }}">Inscris-toi vite</a>
+        </p>
+
+    </div>
 
 
-        <h1>Login</h1>
-
-            <form action="{{ path('connexion') }}" method="post">
-                <div class="form-group">
-                    <input type="text" name="_username" id="pseudo" class="form-control" value="{{ username }}" placeholder="Pseudo">
-                </div>
-
-                <div class="form-group">
-                    <input type="password" name="_password" id="mdp" class="form-control" placeholder="Mot de passe" >
-                </div>
-
-                <button class="btn btn-success pull-right">Se connecter</button>
-            </form>
     {% for message in app.flashes('banni') %}
         <div class="alert alert-danger">
             {{ message }}

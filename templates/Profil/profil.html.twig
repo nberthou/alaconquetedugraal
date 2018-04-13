@@ -1,115 +1,365 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+{% endblock %}
 {% block body %}
-    <h1>Profil de {{ app.user.pseudo }}</h1>
+    {#<div class="container" style="margin-top: 5vh; background: rgba(255, 255, 255, 0.5); border: 5px solid #ba9647; ">#}
+    {#<h1>Profil de {{ app.user.pseudo }}</h1>#}
 
-    <form method="post" action="{{ path('edit_pseudo', {'id': app.user.id}) }}">
-        <div class="form-group">
-            <h3 class="form-text">Changer de pseudo</h3>
-            <input type="text" name="pseudo" placeholder="Nouveau pseudo" class="form-control">
-            <input type="hidden" value="{{ app.user.id }}" name="id">
-            <button type="submit" class="btn btn-danger">Changer de pseudo</button>
-        </div>
-    </form>
-    <div class="row"></div>
-    <form action="{{ path('edit_mdp', {'id': app.user.id}) }}" method="post">
-        <div class="form-group">
-            <h3 class="form-text">Changer de mot de passe</h3>
-            <input type="password"  name="mdp" placeholder="Nouveau mot de passe" class="form-control">
-            <input type="hidden" name="id" value="{{ app.user.id }}">
-            <button type="submit" class="btn btn-danger">Changer de mot de passe</button>
-        </div>
-    </form>
-    <div class="row"></div>
-    <form method="post" action="{{ path('edit_mail', {'id': app.user.id}) }}">
-        <div class="form-group">
-            <h3 class="form-text">Changer de pseudo</h3>
-            <input type="text" name="email" placeholder="Adresse mail actuelle : {{ app.user.email }}" class="form-control" >
-            <input type="hidden" value="{{ app.user.id }}" name="id">
-            <button type="submit" class="btn btn-danger">Changer d'adresse mail</button>
-        </div>
-    </form>
+    {#<form method="post" action="{{ path('edit_pseudo', {'id': app.user.id}) }}">#}
+    {#<div class="form-group">#}
+    {#<h3 class="form-text">Changer de pseudo</h3>#}
+    {#<input type="text" name="pseudo" placeholder="Nouveau pseudo" class="form-control">#}
+    {#<input type="hidden" value="{{ app.user.id }}" name="id">#}
+    {#<button type="submit" class="btn btn-danger">Changer de pseudo</button>#}
+    {#</div>#}
+    {#</form>#}
+    {#<div class="row"></div>#}
+    {#<form action="{{ path('edit_mdp', {'id': app.user.id}) }}" method="post">#}
+    {#<div class="form-group">#}
+    {#<h3 class="form-text">Changer de mot de passe</h3>#}
+    {#<input type="password"  name="mdp" placeholder="Nouveau mot de passe" class="form-control">#}
+    {#<input type="hidden" name="id" value="{{ app.user.id }}">#}
+    {#<button type="submit" class="btn btn-danger">Changer de mot de passe</button>#}
+    {#</div>#}
+    {#</form>#}
+    {#<div class="row"></div>#}
+    {#<form method="post" action="{{ path('edit_mail', {'id': app.user.id}) }}">#}
+    {#<div class="form-group">#}
+    {#<h3 class="form-text">Changer de pseudo</h3>#}
+    {#<input type="text" name="email" placeholder="Adresse mail actuelle : {{ app.user.email }}" class="form-control" >#}
+    {#<input type="hidden" value="{{ app.user.id }}" name="id">#}
+    {#<button type="submit" class="btn btn-danger">Changer d'adresse mail</button>#}
+    {#</div>#}
+    {#</form>#}
 
 
-    <h3>Ajouter un joueur en ami</h3>
-    <form action="{{ path('ajout_ami') }}" method="post">
-        <select name="ami">
-            {% for joueur in joueurs %}
-                {% if (joueur.id != app.user.id)   %}
-                    <option value="{{ joueur.id }}">{{ joueur.pseudo }}</option>
-                {% endif %}
-            {% endfor %}
-        </select>
-        <input type="submit" value="Ajouter en ami">
-    </form>
-    <br>
-    {% for message in app.flashes('notice_ajout') %}
-        <div class="alert alert-danger">
-            {{ message }}
-        </div>
-    {% endfor %}
+    {#<h3>Ajouter un joueur en ami</h3>#}
+    {#<form action="{{ path('ajout_ami') }}" method="post">#}
+    {#<select name="ami">#}
+    {#{% for joueur in joueurs %}#}
+    {#{% if (joueur.id != app.user.id) %}#}
+    {#<option value="{{ joueur.id }}">{{ joueur.pseudo }}</option>#}
+    {#{% endif %}#}
+    {#{% endfor %}#}
+    {#</select>#}
+    {#<input type="submit" value="Ajouter en ami">#}
+    {#</form>#}
+    {#<br>#}
+    {#{% for message in app.flashes('notice_ajout') %}#}
+    {#<div class="alert alert-danger">#}
+    {#{{ message }}#}
+    {#</div>#}
+    {#{% endfor %}#}
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-4">
-                <h3>Liste d'amis</h3>
-                        {% for ami in amis %}
-                        <form action="{{ path('supprimer_ami') }}" method="post">
-                            {% if app.user.pseudo != ami.j2.pseudo %}
-                                <label> {{ ami.j2.pseudo }} </label> <input type="hidden" name="ami_id" value="{{ ami.j2.id }}"> <input type="submit" value="Supprimer" name="supprimer">
-                                <a href="{{ path('creer_partie') }}"><button></button></a>
-                            {% elseif app.user.pseudo != ami.j1.pseudo %}
-                                <label> {{ ami.j1.pseudo }} </label> <input type="hidden" name="ami_id" value="{{ ami.j1.id }}"> <input type="submit" value="Supprimer" name="supprimer">
-                                <a href="{{ path('creer_partie') }}"><button></button></a>
-                            {% endif %}
-                        </form>
-                        {% endfor %}
+    {#<div class="container-fluid">#}
+    {#<div class="row">#}
+    {#<div class="col-lg-4 col-md-4 col-sm-4">#}
+    {#<h3>Liste d'amis</h3>#}
+    {#{% for ami in amis %}#}
+    {#{% if app.user.pseudo != ami.j2.pseudo %}#}
+    {#<form action="{{ path('supprimer_ami') }}" method="post" style="display: inline-block;">#}
+    {#<label> {{ ami.j2.pseudo }} </label> <input type="hidden" name="ami_id" value="{{ ami.j2.id }}"> <input type="submit" value="Supprimer" name="supprimer">#}
+    {#</form>#}
+    {#<form action="{{ path('creer_partie') }}" method="post" style="display: inline-block;">#}
+    {#<input type="hidden" name="adversaire" value="{{ ami.j2.id }}"> <input type="submit" value="Jouer" name="jouer">#}
+    {#</form>#}
+    {#{% elseif app.user.pseudo != ami.j1.pseudo %}#}
+    {#<form action="{{ path('supprimer_ami') }}" method="post" style="display: inline-block;">#}
+    {#<label> {{ ami.j1.pseudo }} </label> <input type="hidden" name="ami_id" value="{{ ami.j1.id }}"> <input type="submit" value="Supprimer" name="supprimer">#}
+    {#</form>#}
+    {#<form action="{{ path('creer_partie') }}" method="post" style="display: inline-block;">#}
+    {#<input type="hidden" name="adversaire" value="{{ ami.j1.id }}"> <input type="submit" value="Jouer" name="jouer">#}
+    {#</form>#}
+    {#{% endif %}#}
+    {#{% endfor %}#}
+    {#</div>#}
+
+    {#<div class="col-lg-4 col-md-4 col-sm-4">#}
+    {#<h3>Invitations reçues</h3>#}
+    {#{% for amiAttente in amisAttente %}#}
+    {#<form action="{{ path('repondre_demande') }}" method="post">#}
+    {#{% if app.user.pseudo != amiAttente.j1.pseudo and amiAttente.derniereAction != app.user.id %}#}
+    {#<label>{{ amiAttente.j1.pseudo }} </label><input type="hidden" value="{{ amiAttente.j1.id }}" name="ami_id"> <input type="submit" value="Accepter" name="accepter"> <input type="submit" value="Refuser" name="refuser">#}
+    {#{% endif %}#}
+    {#</form>#}
+    {#{% endfor %}#}
+    {#</div>#}
+
+    {#<div class="col-lg-4 col-md-4 col-sm-4">#}
+    {#<h3>Invitations envoyées</h3>#}
+    {#{% for amiAttente in amisAttente %}#}
+    {#<form action="{{ path('supprimer_ami') }}" method="post">#}
+    {#{% if app.user.pseudo != amiAttente.j2.pseudo and amiAttente.derniereAction == app.user.id %}#}
+    {#<label>{{ amiAttente.j2.pseudo }} </label><input type="hidden" name="ami_id" value="{{ amiAttente.j2.id }}"> <input type="submit" value="Annuler" name="annuler">#}
+    {#{% endif %}#}
+    {#</form>#}
+    {#{% endfor %}#}
+    {#</div>#}
+    {#</div>#}
+
+    {#{% for message in app.flashes('notice_amis') %}#}
+    {#<div class="alert alert-danger">#}
+    {#{{ message }}#}
+    {#</div>#}
+    {#{% endfor %}#}
+    {#</div>#}
+    {#<br>#}
+
+    {#<div class="container-fluid">#}
+    {#<h1>Vos parties : </h1>#}
+    {#{% for partie in parties %}#}
+    {#{% if app.user.id == partie.j1.id %}#}
+    {#- Contre {{ partie.j2.pseudo }} <a href="{{ path('afficher_partie', {'id' : partie.id}) }}">#}
+    {#<button>Rejoindre</button>#}
+    {#</a>#}
+    {#<br>#}
+    {#{% elseif app.user.id == partie.j2.id %}#}
+    {#- Contre {{ partie.j1.pseudo }} <a href="{{ path('afficher_partie', {'id' : partie.id}) }}">#}
+    {#<button>Rejoindre</button>#}
+    {#</a>#}
+    {#<br>#}
+    {#{% endif %}#}
+    {#{% endfor %}#}
+    {#</div>#}
+
+    {#</div>#}
+
+    <section class="profil connexion main-contenu">
+        <div class="register">
+            <!-- Afficher nom du joeur -->
+            <div class="logo">
+                <div class="img-fix">
+                    <img src="{{ asset('img/logo.svg') }}" alt="logo A la conquête du Graal">
+                </div>
+                <div class="titre">
+                    <h1>
+                        Bienvenue {{ app.user.pseudo }}
+                    </h1>
+                </div>
             </div>
 
-            <div class="col-lg-4 col-md-4 col-sm-4">
-                <h3>Invitations reçues</h3>
-                {% for amiAttente in amisAttente %}
-                    <form action="{{ path('repondre_demande') }}" method="post">
-                            {% if app.user.pseudo != amiAttente.j1.pseudo and amiAttente.derniereAction != app.user.id %}
-                                <label>{{ amiAttente.j1.pseudo }} </label><input type="hidden" value="{{ amiAttente.j1.id }}" name="ami_id"> <input type="submit" value="Accepter" name="accepter"> <input type="submit" value="Refuser" name="refuser">
-                            {% endif %}
-                    </form>
-                {% endfor %}
-            </div>
+            <!-- Formulaire changement -->
+            <!-- Changer de pseudo -->
+            <form class="col-md-9" method="post" action="{{ path('edit_pseudo', {'id': app.user.id}) }}">
+                <div class="form-group">
+                    <h2 class="form-text">Changer de nom</h2>
+                    <input class="form-control" name="pseudo" type="text" placeholder="Nouveau pseudo">
+                    <input name="id" type="hidden" value="{{ app.user.id }}">
+                    <input class="col-md-6" type="submit" value="Confirmer">
+                </div>
+            </form>
 
-            <div class="col-lg-4 col-md-4 col-sm-4">
-                <h3>Invitations envoyées</h3>
-                {% for amiAttente in amisAttente %}
-                    <form action="{{ path('supprimer_ami') }}" method="post">
-                            {% if app.user.pseudo != amiAttente.j2.pseudo and amiAttente.derniereAction == app.user.id %}
-                                <label>{{ amiAttente.j2.pseudo }} </label><input type="hidden" name="ami_id" value="{{ amiAttente.j2.id }}"> <input type="submit" value="Annuler" name="annuler">
-                            {% endif %}
-                    </form>
-                {% endfor %}
+            <!-- Changer de mot de passe -->
+            <form class="col-md-9" action="{{ path('edit_mdp', {'id': app.user.id}) }}" method="post">
+                <div class="form-group">
+                    <h2 class="form-text">Changer de mot de passe</h2>
+                    <input class="form-control" name="mdp" type="password" placeholder="Nouveau mot de passe">
+                    <input name="id" type="hidden" value="{{ app.user.id }}">
+                    <input class="col-md-6" type="submit" value="Confirmer">
+                </div>
+            </form>
+
+            <!-- Changer d'adresse mail -->
+            <form class="col-md-9" method="post" action="{{ path('edit_mail', {'id': app.user.id}) }}">
+                <div class="form-group">
+                    <h2 class="form-text">Mettre à jour l'adresse mail</h2>
+                    <input class="form-control" name="email" type="text" placeholder="Adresse mail actuelle : {{ app.user.email }}">
+                    <input name="id" type="hidden" value="{{ app.user.id }}">
+                    <input class="col-md-6" type="submit" value="Confirmer">
+                </div>
+            </form>
+
+
+            <!-- Ajouter un ami -->
+            <h2>Ajouter un joueur en ami</h2>
+            <form class="col-md-9 form-group" action="{{ path('ajout_ami') }}" method="post">
+                <select name="ami" class="form-control">
+                    {% for joueur in joueurs %}
+                        {% if (joueur.id != app.user.id) %}
+                            <option value="{{ joueur.id }}">{{ joueur.pseudo }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <input class="col-md-6" type="submit" value="Ajouter en ami">
+            </form>
+
+            <div class="list col-md-12">
+                <div id="accordion">
+                    <!-- Liste d'amis -->
+                    <div class="card">
+                        <div class="card-header" id="headingOne">
+                            <h3 class="mb-0">
+                                <button class="titre btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Liste d'amis
+                                </button>
+                            </h3>
+                        </div>
+
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body list-ami">
+                                {% for ami in amis %}
+                                    {% if app.user.pseudo != ami.j2.pseudo %}
+                                        <form action="{{ path('supprimer_ami') }}" method="post" class="col-md-6">
+                                            <!-- Ici le nom de l'ami ajouter -->
+                                            <label class="nom-joueur col-md-12"> {{ ami.j2.pseudo }} </label>
+                                            <br>
+                                            <!-- Son ID -->
+                                            <input type="hidden" name="ami_id" value="{{ ami.j2.id }}">
+                                            <div class="ami">
+                                            <!-- Bouton supprimer -->
+                                            <input class="col-md-12" type="submit" value="Supprimer" name="supprimer">
+                                            </div>
+                                        </form>
+                                        <!-- Bouton créer une partie -->
+                                        <form action="{{ path('creer_partie') }}" class="col-md-6 partie">
+                                            <input type="hidden" name="adversaire" value="{{ ami.j2.id }}">
+                                            <input class="col-md-12" type="submit" value="Créer" name="creer">
+                                        </form>
+                                    {% elseif app.user.pseudo != ami.j1.pseudo %}
+                                        <form action="{{ path('supprimer_ami') }}" method="post" class="col-md-6">
+                                            <!-- Ici le nom de l'ami ajouter -->
+                                            <label class="nom-joueur col-md-12"> {{ ami.j1.pseudo }} </label>
+                                            <br>
+                                            <!-- Son ID -->
+                                            <input type="hidden" name="ami_id" value="{{ ami.j1.id }}">
+                                            <!-- Bouton supprimer -->
+                                            <div class="ami">
+                                            <input class="col-md-12" type="submit" value="Supprimer" name="supprimer">
+                                            </div>
+                                        </form>
+                                        <!-- Bouton créer une partie -->
+                                        <form action="{{ path('creer_partie') }}" class="col-md-6 partie">
+                                            <input type="hidden" name="adversaire" value="{{ ami.j1.id }}">
+                                            <input class="col-md-12" type="submit" value="Créer" name="creer">
+                                        </form>
+                                    {% endif %}
+                                {% else %}
+                                    Vous n'avez pas d'amis.
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rejoindre une partie -->
+                    <div class="card">
+                        <div class="card-header" id="headingFour">
+                            <h3 class="mb-0">
+                                <button class="titre btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    Parties en cours
+                                </button>
+                            </h3>
+                        </div>
+                        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                            <div class="card-body">
+                                {% for partie in parties if partie.etat == 0 %}
+                                    {% if app.user.id == partie.j1.id %}
+                                <div class="rejoindre">
+                                    <!-- Ici les id des joueurs -->
+                                    <p class="col-md-6">
+                                        {{ app.user.pseudo }} VS {{ partie.j2.pseudo }}
+                                    </p>
+                                    <!-- Lien partie -->
+                                    <a href="{{ path('afficher_partie', {'id' : partie.id}) }}" class="col-md-4">
+                                        <button>
+                                            Rejoindre
+                                        </button>
+                                    </a>
+                                </div>
+                                {% elseif app.user.id == partie.j2.id %}
+                                <div class="rejoindre">
+                                    <!-- Ici les id des joueurs -->
+                                    <p class="col-md-6">
+                                        {{ app.user.pseudo }} VS {{ partie.j1.pseudo }}
+                                    </p>
+                                    <!-- Lien partie -->
+                                    <a href="{{ path('afficher_partie', {'id' : partie.id}) }}" class="col-md-4">
+                                        <button>
+                                            Rejoindre
+                                        </button>
+                                    </a>
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Invitations reçues -->
+                    <div class="card">
+                        <div class="card-header" id="headingTwo">
+                            <h3 class="mb-0">
+                                <button class="titre btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Invitations reçues
+                                </button>
+                            </h3>
+                        </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                            <div class="card-body">
+                                {% for amiAttente in amisAttente %}
+                                    {% if app.user.pseudo != amiAttente.j1.pseudo and amiAttente.derniereAction != app.user.id %}
+                                        <form action="{{ path('repondre_demande') }}" method="post" class="col-md-12">
+                                            <!-- Nom joueur -->
+                                            <label class="nom-joueur">{{ amiAttente.j1.pseudo }} </label>
+                                            <!-- Id joueur -->
+                                            <input name="ami_id" type="hidden" value="{{ amiAttente.j1.id }}">
+                                            <div class="ami">
+                                                <input style="margin-right:10px;" class="col-md-6" name="accepter" type="submit" value="Accepter">
+                                                <input class="col-md-6" name="refuser" type="submit" value="Refuser">
+                                            </div>
+                                        </form>
+                                    {% endif %}
+                                {% else %}
+                                    <p>Vous n'avez pas d'invitations reçues.</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Invitations envoyées -->
+                    <div class="card">
+                        <div class="card-header" id="headingThree">
+                            <h3 class="mb-0">
+                                <button class="titre btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Invitations envoyées
+                                </button>
+                            </h3>
+                        </div>
+                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                            <div class="card-body">
+                                {% for amiAttente in amisAttente %}
+                                    {% if app.user.pseudo != amiAttente.j2.pseudo and amiAttente.derniereAction == app.user.id %}
+                                        <form action="{{ path('supprimer_ami') }}" method="post">
+                                            <!-- Nom du joueur Invité -->
+                                            <label class="nom-joueur"> {{ amiAttente.j2.pseudo }}</label>
+                                            <div class="ami">
+                                                <!-- Id joueur -->
+                                                <input name="ami_id" type="hidden" value="{{ amiAttente.j2.id }}">
+                                                <!-- Bouton annuler -->
+                                                <input class="col-md-6" name="annuler" type="submit" value="Annuler" style="margin-left:auto; margin-right:auto;">
+                                            </div>
+                                        </form>
+                                    {% endif %}
+                                {% else %}
+                                    <p>Vous n'avez pas d'invitations envoyées.</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+    </section>
 
-        {% for message in app.flashes('notice_amis') %}
-            <div class="alert alert-danger">
-                {{ message }}
-            </div>
-        {% endfor %}
-    </div>
-    <br>
-    <div class="container-fluid">
-        <h2>Invitations à une partie</h2>
-            {% for partie in parties %}
-                {% if partie.j1.id == app.user.id or partie.j2.id == app.user.id %}
-            {{ partie.id }}
-        {% endif %}
-            {% endfor %}
-    </div>
 
 {% endblock %}
 
 {% block javascripts %}
-    <script>
-
-    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
 
 {% endblock %}

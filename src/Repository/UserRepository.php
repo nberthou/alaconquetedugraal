@@ -24,5 +24,13 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
             ->getOneOrNullResult();
     }
 
+    public function orderByParties() {
+        return $this->createQueryBuilder('u')
+            ->addOrderBy('u.parties_gagnees', 'DESC')
+            ->addOrderBy('u.parties_jouees','DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
 
 }

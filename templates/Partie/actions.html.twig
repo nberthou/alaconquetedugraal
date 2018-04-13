@@ -1,0 +1,148 @@
+<div id="secret">
+    <form action="{{ path('secret', {'id' : partie.id}) }}" method="post">
+        <div class="hide">
+            <img id="fillimg1" style="height:8vw;width:6vw;margin: 5%;" src="">
+        </div>
+        <input id="fill1" type="text" name="secret">
+        <div class="divbtn">
+            <input type="submit" class="mainbtn" onclick="ajax()" value="Secret">
+            <input type="button" onclick="annuler()" value="Annuler" class="mainbtn annuler"></div>
+    </form>
+</div>
+
+<div id="dissimulation">
+    <!-- <span style="color: white;font-size: 13px;">Choisissez vos cartes à dissimuler :</span>-->
+    <form action="{{ path('dissimulation', {'id' : partie.id}) }}" method="post">
+
+        <div class="hide">
+            <img id="fillimg1" style="height:8vw;width:6vw;margin: 5%;" src="">
+            <img id="fillimg2" style="height:8vw;width:6vw;margin: 5%;" src="">
+        </div>
+        <input id="fill1" type="text" name="carte1" value="">
+        <input id="fill2" type="number" name="carte2">
+
+        <div class="divbtn">
+            <input type="submit" class="mainbtn" value="Dissimulation">
+            <input type="button" onclick="annuler()" id="supp" value="Annuler" class="mainbtn annuler">
+        </div>
+    </form>
+</div>
+
+<div id="cadeau">
+    <form action="{{ path('don_cadeau', {'id' : partie.id}) }}" method="post">
+        <div class="hide">
+            <img id="fillimg1" style="height:8vw;width:6vw;margin: 5%;" src="">
+            <img id="fillimg2" style="height:8vw;width:6vw;margin: 5%;" src="">
+            <img id="fillimg3" style="height:8vw;width:6vw;margin: 5%;" src="">
+        </div>
+        <div class="divbtn">
+            <input id="fill1" type="text" name="cartec1"><input id="fill2" type="text" name="cartec2"><input id="fill3"
+                                                                                                             type="number"
+                                                                                                             name="cartec3">
+            <input type="submit" class="mainbtn" value="Cadeau">
+            <input type="button" onclick="annuler()" id="supp" value="Annuler" class="mainbtn annuler">
+        </div>
+    </form>
+</div>
+
+<div id="concurrence">
+    <form action="{{ path('don_concurrence', {'id' : partie.id}) }}" method="post" class="concurrence">
+        <div class="hides">
+            <div class="hide">
+                <img id="fillimg1" style="height:8vw;width:6vw;margin: 5%;" src="">
+                <img id="fillimg2" style="height:8vw;width:6vw;margin: 5%;" src="">
+
+            </div>
+            <div class="hide">
+                <img id="fillimg3" style="height:8vw;width:6vw;margin: 5%;" src="">
+                <img id="fillimg4" style="height:8vw;width:6vw;margin: 5%;" src="">
+
+            </div>
+        </div>
+
+        <div class="divbtn">
+            <input id="fill1" type="text" name="carte1_1"><input id="fill2" type="text" name="carte1_2"><input
+                    id="fill3" type="number" name="carte2_1"><input id="fill4" type="number" name="carte2_2">
+            <input type="submit" class="mainbtn" value="Concurrence">
+            <input type="button" onclick="annuler()" id="supp" value="Annuler" class="mainbtn annuler">
+        </div>
+    </form>
+</div>
+
+<div id="tour">
+    <h1>C'est au tour de : {{ partie.tour.pseudo }}</h1>
+</div>
+
+<div id="finmanche">
+    <a href="{{ path('fin_manche', {'id': partie.id}) }}">
+        <button class="btn btn-success">Fin de manche</button>
+    </a>
+</div>
+
+{% if app.user.id == partie.J1.id %}
+    <div id="concurrenceA">
+        <div class="hides">
+            <div class="paire1" onclick="paire1()">  {% for paire1 in cartesCo['paire1'] %}
+                    <img src="{{ asset(paire1) }}" alt="" style="height:8vw;width:6vw;margin: 5%;">
+                {% endfor %}</div>
+            <div class="paire2" onclick="paire2()" > {% for paire2 in cartesCo['paire2'] %}
+                    <img src="{{ asset(paire2) }}" alt="" style="height:8vw;width:6vw;margin: 5%;">
+                {% endfor %}</div>
+        </div>
+        <form action="{{ path('recu_concurrence', {'id' : partie.id}) }}" method="post">
+            <input id="radio1" type="checkbox" value="paire1" name="paire1">
+            <input id="radio2" type="checkbox" value="paire2" name="paire2">
+            <div class="divbtn"><input type="submit" value="Reçevoir" class="mainbtn"></div>
+
+        </form>
+    </div>
+
+    <div id="cadeauA">
+        <div class="hide"> {% for id, carte in cartesCa %}
+                {% set i = ( i | default(0) ) + 1 %}
+                <img id="{{ id }}" src="{{ asset(carte ) }}" alt="" style="height:8vw;width:6vw;margin: 5%;"
+                     class="choix{{ i }}" onclick="choix{{ i }}()">
+            {% endfor %}</div>
+
+
+        <form action="{{ path('recu_cadeau', {'id' : partie.id}) }}" method="post">
+            <input type="text" id="fill5" name="carter">
+            <div class="divbtn"><input type="submit" value="Reçevoir" class="mainbtn"></div>
+        </form>
+    </div>
+{% endif %}
+
+{% if app.user.id == partie.J2.id %}
+    <div id="concurrenceA">
+        <div class="hides">
+            <div class="paire1" onclick="paire1()" >  {% for paire1 in cartesCo['paire1'] %}
+                    <img src="{{ asset(paire1) }}" alt="" style="height:8vw;width:6vw;margin: 5%;">
+                {% endfor %}</div>
+            <div class="paire2" onclick="paire2()" > {% for paire2 in cartesCo['paire2'] %}
+                    <img src="{{ asset(paire2) }}" alt="" style="height:8vw;width:6vw;margin: 5%;">
+                {% endfor %}</div>
+        </div>
+        <form action="{{ path('recu_concurrence', {'id' : partie.id}) }}" method="post">
+            <input id="radio1" type="checkbox" value="paire1" name="paire1">
+            <input id="radio2" type="checkbox" value="paire2" name="paire2">
+            <div class="divbtn"><input type="submit" value="Reçevoir" class="mainbtn"></div>
+
+        </form>
+    </div>
+
+    <div id="cadeauA">
+        <div class="hide">
+            {% for id, carte in cartesCa %}
+                {% set i = ( i | default(0) ) + 1 %}
+                 <img id="{{ id }}" src="{{ asset(carte ) }}" alt="" style="height:8vw;width:6vw;margin: 5%;"
+                     class="choix{{ i }}" onclick="choix{{ i }}()">
+            {% endfor %}</div>
+
+
+        <form action="{{ path('recu_cadeau', {'id' : partie.id}) }}" method="post">
+            <input type="text" id="fill5" name="carter">
+            <div class="divbtn"><input type="submit" value="Reçevoir" class="mainbtn"></div>
+
+        </form>
+    </div>
+{% endif %}

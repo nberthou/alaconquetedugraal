@@ -1,29 +1,158 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}A la conquête du graal{% endblock %}</title>
-        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-        {% block style %}{% endblock %}
-    </head>
-    <body>
-<ul>
-    <li><a href="{{ path('index') }}">Accueil</a></li>
-    {% if not app.user %}
-        <li><a href="{{ path('inscription') }}">Inscription</a></li>
-        <li><a href="{{ path('connexion') }}">Connexion</a></li>
-    {% elseif app.user %}
-        <li><a href="{{ path('profil') }}">Profil</a></li>
-        <li><a href="{{ path('recherche_joueurs') }}">Créer une partie</a></li>
-        <li><a href="{{ logout_path() }}">Déconnexion</a></li>
-        {% if is_granted('ROLE_ADMIN') %}
-        <li><a href="{{ path('admin') }}">Admin</a></li>
-            {% endif %}
-    {% endif %}
-</ul>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    <script src="{{ asset('js/bootstrap.js') }}"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    </body>
+﻿<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}À la conquête du Graal{% endblock %}</title>
+    <!-- CSS -->
+    {% block stylesheets %}{% endblock %}
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link type="image/x-icon" href="https://floriandurand.com/graal/images/logo51.png" rel="shortcut icon">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1"
+          crossorigin="anonymous">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=MedievalSharp" rel="stylesheet">
+</head>
+
+<body>
+<!-- Nav -->
+<input class="valider" type="checkbox" id="navcheck" role="button" title="menu">
+<label class="label" for="navcheck" aria-hidden="true" title="menu">
+        <span class="burger">
+            <span class="bar">
+                <span class="visuallyhidden">Menu</span>
+            </span>
+        </span>
+</label>
+<nav id="menu">
+    <ul>
+        <li>
+            <a href="{{ path('index') }}">Accueil</a>
+        </li>
+        {% if not app.user %}
+            <li>
+                <a href="{{ path('inscription') }}">Inscription</a>
+            </li>
+            <li>
+                <a href="{{ path('connexion') }}">Connexion</a>
+            </li>
+        {% endif %}
+        <li>
+            <a href="{{ path('index') }}">Règles du jeu</a>
+        </li>
+        <li>
+            <a href="http://89.234.183.130/promo/">Histoire</a>
+        </li>
+        <li><a href="{{ path('classement') }}">Classement</a></li>
+        {% if app.user %}
+            <li><a href="{{ path('profil') }}">Profil</a></li>
+            <li>
+                <a href="{{ path('recherche_joueurs') }}">Créer une partie</a></li>
+            <li>
+                <a href="{{ path('deconnexion') }}">Déconnexion</a>
+            </li>
+            {% if is_granted('ROLE_ADMIN') %}
+                <li>
+                    <a href="{{ path('admin') }}">Administration</a>
+                </li>
+                {% endif %}
+        {% endif %}
+    </ul>
+</nav>
+{% block body %}{% endblock %}
+{% if app.user %}
+<section class="partie-chat">
+    <div class="main-chat col-md-3" style="position:fixed;">
+        <div class="panel panel-primary">
+            <!-- Bouton réveler le chat -->
+            <div class="panel-heading col-md-12" id="chat-accordion">
+                <div class="chat-icon">
+                    <span class="fas fa-comments"></span> Chat
+                </div>
+                <div class="bouton">
+                    <a class="btn" data-parent="#chat-accordion" data-toggle="collapse" type="button" href="#collapseFive">
+                        <span class="far fa-arrow-alt-circle-up"></span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="panel-collapse collapse" id="collapseFive">
+                <div class="panel-body">
+                    <ul class="chat">
+
+
+                    </ul>
+                </div>
+
+                <!-- Ici le formulaire pour envoyer le message dans le chat -->
+                <div class="panel-footer">
+                    <div class="input-group">
+                        <form action="" style="display:flex; width:100%;" id="form">
+                            <!-- Champ d'écriture du message -->
+                            <input class="form-control input-sm" id="btn-input" type="text" placeholder="Écrit ton message ici...">
+
+                            <!-- Boutton envoyer -->
+                            <span class="input-group-btn">
+                                    <input class="btn" id="btn-chat" name="annuler" type="submit" value="Envoyer" style="margin-left:auto; margin-right:auto; border-radius:0; background-color:#ba9647; color:white;">
+                                </span>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endif %}
+{% block javascripts %}{% endblock %}
+
+
+<!-- script bootstrap -->
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<script src="{{ asset('js/socket.io.js') }}"></script>
+{% if app.user %}
+<script>
+    $(function() {
+    var socket = io.connect('http://89.234.183.130:3000/');
+    $('#form').submit(function(e) {
+        e.preventDefault();
+        var message = {
+            text: $('#btn-input').val(),
+            pseudo : '{{ app.user.pseudo }}'
+        }
+        socket.emit('message', message);
+        $('#btn-input').val('');
+        $('.partie-chat input').focus();
+    })
+    socket.on('message', function(message) {
+        $('.chat').append(' <li class="right clearfix">\n' +
+            '                            <div class="chat-body clearfix">\n' +
+            '                                <div class="header">\n' +
+            '                                    <strong class="primary-font"> \n' + message.pseudo + '</strong>\n' +
+            '                                </div>\n' +
+            '                                <p>\n' +
+                                                message.text +
+            '                                </p>\n' +
+            '                            </div>\n' +
+            '                        </li>');
+    })
+    })
+</script>
+{% endif %}
+</body>
+
 </html>

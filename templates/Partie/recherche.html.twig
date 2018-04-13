@@ -1,23 +1,34 @@
 
 {% extends 'base.html.twig' %}
 
-{% block javascripts %}
-    <script>
-    </script>
+{% block stylesheets %}
 {% endblock %}
 
 {% block body %}
 
-    <h1>Rechercher un joueur...</h1>
-    <form action="{{ path('creer_partie') }}" method="post">
-        <select name="adversaire">
-            {% for joueur in joueurs %}
-                {% if app.user.id != joueur.id %}
-                    <option value="{{ joueur.id }}">{{ joueur.pseudo }}</option>
-                {% endif %}
-            {% endfor %}
-        </select>
-        <input type="submit">
-    </form>
+
+    <section class="jouer connexion rechercher">
+        <div class="bouton1 col-md-7">
+            <h2>
+                <div class="link-one">
+                    <a href="#">Trouver un joueur</a>
+                </div>
+            </h2>
+            <div class="centrer">
+                <form class="form-group col-md-8" action="{{ path('creer_partie') }}" method="post">
+                    <select name="adversaire" class="form-control">
+                        {% for joueur in joueurs %}
+                            {% if app.user.id != joueur.id %}
+                                <option value="{{ joueur.id }}">{{ joueur.pseudo }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    <div class="centrer">
+                        <input class="col-md-6" type="submit">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
 
 {% endblock %}

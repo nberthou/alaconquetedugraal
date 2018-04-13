@@ -1,4 +1,20 @@
 easy_admin:
+   site_name: "A la conquête du Graal"
    disabled_actions: ['new']
    entities:
-        - App\Entity\User
+        User:
+          class: App\Entity\User
+          list:
+            fields: ['id', 'pseudo', 'email', 'parties_jouees', 'parties_gagnees', 'roles']
+          form:
+            fields: ['pseudo', 'email']
+          disabled_actions: ['delete']
+        Partie:
+          class: App\Entity\Partie
+          list:
+            fields: ['id', 'j1', 'j2', 'etat']
+          disabled_actions: ['edit']
+        Ami:
+          class: App\Entity\Ami
+          disabled_actions: ['edit']
+

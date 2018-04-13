@@ -1,12 +1,50 @@
-{% extends 'base.html.twig' %}{% block body %}
+{% extends 'base.html.twig' %}
+{% block stylesheets %} <link rel="stylesheet" href="{{ asset('css/style.css') }}"> {% endblock %}
+    {% block body %}
+    <section class="connexion main-contenu">
+        <div class="register">
+            <div class="logo">
+                <div class="image">
+                    <img src="{{ asset('img/logo.svg') }}" alt="logo A la conquête du Graal">
+                </div>
+                <div class="titre">
+                    <h1>
+                        Inscription
+                    </h1>
+                </div>
+            </div>
+            <!-- Form Inscription -->
+                {{ form_start(form, {'attr' : {'class' : 'form', 'name': 'inscription'}}) }}
+                <div class="form__field">
+                    {{ form_row(form.pseudo, {'attr' : {'class' : 'form-control', 'id' : 'inscription_pseudo', 'name': 'inscription[pseudo]', 'placeholder' : 'Exemple : Lancelot'}}) }}
+                </div>
 
-    <h1>Login</h1>
+                <div class="form__field">
+                    {{ form_row(form.email, {'label' : 'Adresse mail', 'attr' : {'class' : 'form-control', 'id' : 'inscription_email', 'name': 'inscription[email]', 'placeholder' : 'Exemple : Lancelot@dulac.fr'}}) }}
+                </div>
 
+                <div class="form__field">
+                    {{ form_row(form.mdp, {'label': 'Mot de passe', 'attr' : {'class' : 'form-control', 'id' : 'inscription_mdp', 'name': 'inscription[mdp]', 'placeholder' : 'Mot de passe' } }) }}
+                </div>
+
+                <div class="form__field">
+                    {{ form_row(form.submit, {'label': 'Envoyer', 'attr': {'id' : 'inscription_submit', 'name' : 'inscription[submit]'}}) }}
+                </div>
+
+                {{ form_row(form.parties_jouees) }}
+
+                {{ form_end(form) }}
+
+            <p>Tu as déjà un compte ?
+                <a href="{{ path('connexion') }}">Connecte-toi vite</a>
+            </p>
+
+        </div>
+    </section>
     {{ form_start(form) }}
     {{ form_row(form.pseudo) }}
-    {{ form_row(form.email, {'label' : 'Adresse mail'}) }}
     {{ form_row(form.mdp, {'label': 'Mot de passe'}) }}
-    {{ form_row(form.submit, {'label': 'Envoyer'}) }}
+   {{ form_row(form.submit, {'label': 'Envoyer', 'attr': {'class' : 'btn btn-warning'}}) }}
     {{ form_row(form.parties_jouees) }}
     {{ form_end(form) }}
 {% endblock  %}

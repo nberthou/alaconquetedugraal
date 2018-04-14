@@ -3,127 +3,6 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 {% endblock %}
 {% block body %}
-    {#<div class="container" style="margin-top: 5vh; background: rgba(255, 255, 255, 0.5); border: 5px solid #ba9647; ">#}
-    {#<h1>Profil de {{ app.user.pseudo }}</h1>#}
-
-    {#<form method="post" action="{{ path('edit_pseudo', {'id': app.user.id}) }}">#}
-    {#<div class="form-group">#}
-    {#<h3 class="form-text">Changer de pseudo</h3>#}
-    {#<input type="text" name="pseudo" placeholder="Nouveau pseudo" class="form-control">#}
-    {#<input type="hidden" value="{{ app.user.id }}" name="id">#}
-    {#<button type="submit" class="btn btn-danger">Changer de pseudo</button>#}
-    {#</div>#}
-    {#</form>#}
-    {#<div class="row"></div>#}
-    {#<form action="{{ path('edit_mdp', {'id': app.user.id}) }}" method="post">#}
-    {#<div class="form-group">#}
-    {#<h3 class="form-text">Changer de mot de passe</h3>#}
-    {#<input type="password"  name="mdp" placeholder="Nouveau mot de passe" class="form-control">#}
-    {#<input type="hidden" name="id" value="{{ app.user.id }}">#}
-    {#<button type="submit" class="btn btn-danger">Changer de mot de passe</button>#}
-    {#</div>#}
-    {#</form>#}
-    {#<div class="row"></div>#}
-    {#<form method="post" action="{{ path('edit_mail', {'id': app.user.id}) }}">#}
-    {#<div class="form-group">#}
-    {#<h3 class="form-text">Changer de pseudo</h3>#}
-    {#<input type="text" name="email" placeholder="Adresse mail actuelle : {{ app.user.email }}" class="form-control" >#}
-    {#<input type="hidden" value="{{ app.user.id }}" name="id">#}
-    {#<button type="submit" class="btn btn-danger">Changer d'adresse mail</button>#}
-    {#</div>#}
-    {#</form>#}
-
-
-    {#<h3>Ajouter un joueur en ami</h3>#}
-    {#<form action="{{ path('ajout_ami') }}" method="post">#}
-    {#<select name="ami">#}
-    {#{% for joueur in joueurs %}#}
-    {#{% if (joueur.id != app.user.id) %}#}
-    {#<option value="{{ joueur.id }}">{{ joueur.pseudo }}</option>#}
-    {#{% endif %}#}
-    {#{% endfor %}#}
-    {#</select>#}
-    {#<input type="submit" value="Ajouter en ami">#}
-    {#</form>#}
-    {#<br>#}
-    {#{% for message in app.flashes('notice_ajout') %}#}
-    {#<div class="alert alert-danger">#}
-    {#{{ message }}#}
-    {#</div>#}
-    {#{% endfor %}#}
-
-    {#<div class="container-fluid">#}
-    {#<div class="row">#}
-    {#<div class="col-lg-4 col-md-4 col-sm-4">#}
-    {#<h3>Liste d'amis</h3>#}
-    {#{% for ami in amis %}#}
-    {#{% if app.user.pseudo != ami.j2.pseudo %}#}
-    {#<form action="{{ path('supprimer_ami') }}" method="post" style="display: inline-block;">#}
-    {#<label> {{ ami.j2.pseudo }} </label> <input type="hidden" name="ami_id" value="{{ ami.j2.id }}"> <input type="submit" value="Supprimer" name="supprimer">#}
-    {#</form>#}
-    {#<form action="{{ path('creer_partie') }}" method="post" style="display: inline-block;">#}
-    {#<input type="hidden" name="adversaire" value="{{ ami.j2.id }}"> <input type="submit" value="Jouer" name="jouer">#}
-    {#</form>#}
-    {#{% elseif app.user.pseudo != ami.j1.pseudo %}#}
-    {#<form action="{{ path('supprimer_ami') }}" method="post" style="display: inline-block;">#}
-    {#<label> {{ ami.j1.pseudo }} </label> <input type="hidden" name="ami_id" value="{{ ami.j1.id }}"> <input type="submit" value="Supprimer" name="supprimer">#}
-    {#</form>#}
-    {#<form action="{{ path('creer_partie') }}" method="post" style="display: inline-block;">#}
-    {#<input type="hidden" name="adversaire" value="{{ ami.j1.id }}"> <input type="submit" value="Jouer" name="jouer">#}
-    {#</form>#}
-    {#{% endif %}#}
-    {#{% endfor %}#}
-    {#</div>#}
-
-    {#<div class="col-lg-4 col-md-4 col-sm-4">#}
-    {#<h3>Invitations reçues</h3>#}
-    {#{% for amiAttente in amisAttente %}#}
-    {#<form action="{{ path('repondre_demande') }}" method="post">#}
-    {#{% if app.user.pseudo != amiAttente.j1.pseudo and amiAttente.derniereAction != app.user.id %}#}
-    {#<label>{{ amiAttente.j1.pseudo }} </label><input type="hidden" value="{{ amiAttente.j1.id }}" name="ami_id"> <input type="submit" value="Accepter" name="accepter"> <input type="submit" value="Refuser" name="refuser">#}
-    {#{% endif %}#}
-    {#</form>#}
-    {#{% endfor %}#}
-    {#</div>#}
-
-    {#<div class="col-lg-4 col-md-4 col-sm-4">#}
-    {#<h3>Invitations envoyées</h3>#}
-    {#{% for amiAttente in amisAttente %}#}
-    {#<form action="{{ path('supprimer_ami') }}" method="post">#}
-    {#{% if app.user.pseudo != amiAttente.j2.pseudo and amiAttente.derniereAction == app.user.id %}#}
-    {#<label>{{ amiAttente.j2.pseudo }} </label><input type="hidden" name="ami_id" value="{{ amiAttente.j2.id }}"> <input type="submit" value="Annuler" name="annuler">#}
-    {#{% endif %}#}
-    {#</form>#}
-    {#{% endfor %}#}
-    {#</div>#}
-    {#</div>#}
-
-    {#{% for message in app.flashes('notice_amis') %}#}
-    {#<div class="alert alert-danger">#}
-    {#{{ message }}#}
-    {#</div>#}
-    {#{% endfor %}#}
-    {#</div>#}
-    {#<br>#}
-
-    {#<div class="container-fluid">#}
-    {#<h1>Vos parties : </h1>#}
-    {#{% for partie in parties %}#}
-    {#{% if app.user.id == partie.j1.id %}#}
-    {#- Contre {{ partie.j2.pseudo }} <a href="{{ path('afficher_partie', {'id' : partie.id}) }}">#}
-    {#<button>Rejoindre</button>#}
-    {#</a>#}
-    {#<br>#}
-    {#{% elseif app.user.id == partie.j2.id %}#}
-    {#- Contre {{ partie.j1.pseudo }} <a href="{{ path('afficher_partie', {'id' : partie.id}) }}">#}
-    {#<button>Rejoindre</button>#}
-    {#</a>#}
-    {#<br>#}
-    {#{% endif %}#}
-    {#{% endfor %}#}
-    {#</div>#}
-
-    {#</div>#}
 
     <section class="profil connexion main-contenu">
         <div class="register">
@@ -212,7 +91,7 @@
                                             </div>
                                         </form>
                                         <!-- Bouton créer une partie -->
-                                        <form action="{{ path('creer_partie') }}" class="col-md-6 partie">
+                                        <form action="{{ path('creer_partie') }}" method="post" class="col-md-6 partie">
                                             <input type="hidden" name="adversaire" value="{{ ami.j2.id }}">
                                             <input class="col-md-12" type="submit" value="Créer" name="creer">
                                         </form>
@@ -229,7 +108,7 @@
                                             </div>
                                         </form>
                                         <!-- Bouton créer une partie -->
-                                        <form action="{{ path('creer_partie') }}" class="col-md-6 partie">
+                                        <form action="{{ path('creer_partie') }}" method="post" class="col-md-6 partie">
                                             <input type="hidden" name="adversaire" value="{{ ami.j1.id }}">
                                             <input class="col-md-12" type="submit" value="Créer" name="creer">
                                         </form>

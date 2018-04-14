@@ -612,6 +612,8 @@ class PartieController extends Controller
         $tPaire2 = ($joueur == $partie->getJ1()) ? $partie->getActionJ2()['concurrence']->cartes->paire2 : (($joueur == $partie->getJ2()) ? $partie->getActionJ1()['concurrence']->cartes->paire2 : 'Erreur');
         $cartesCa = $tCartes;
         $cartesCo = array("paire1" => array(), "paire2" => array());
+        $terrain = ($joueur == $partie->getJ1()) ? $partie->getTerrainJ1() : (($joueur == $partie->getJ2()) ? $partie->getTerrainJ2() : 'Erreur');
+        $tTerrain = array();
 
         foreach($tPaire1 as $cartesR1) {
             $cartesCo["paire1"][] = $this->getDoctrine()->getRepository(Carte::class)->find($cartesR1)->getImg();
@@ -620,7 +622,11 @@ class PartieController extends Controller
             $cartesCo["paire2"][] = $this->getDoctrine()->getRepository(Carte::class)->find($cartesR2)->getImg();
         }
 
+        foreach($terrain as $carteTerrain) {
+            $tTerrain[] = $this->getDoctrine()->getRepository(Carte::class)->find($carteTerrain)->getImg();
+        }
+
         dump((array) $cartesCa);
-        return $this->render('Partie/actions.html.twig', ['partie' => $partie, 'cartesCa' => (array) $cartesCa, 'cartesCo' => $cartesCo]);
+        return $this->render('Partie/actions.html.twig', ['partie' => $partie, 'cartesCa' => (array) $cartesCa, 'cartesCo' => $cartesCo, 'terrain' => $tTerrain]);
     }
 }

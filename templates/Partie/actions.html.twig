@@ -138,6 +138,12 @@
                      class="choix{{ i }}" onclick="choix{{ i }}()">
             {% endfor %}</div>
 
+        <div id="terrain">
+            <h1>Votre terrain : </h1>
+            {% for carte in terrain %}
+                <img src="{{ asset(carte) }}" alt="" style="width: 6vw">
+                {% endfor %}
+        </div>
 
         <form action="{{ path('recu_cadeau', {'id' : partie.id}) }}" method="post">
             <input type="text" id="fill5" name="carter">

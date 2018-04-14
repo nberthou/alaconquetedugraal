@@ -128,17 +128,42 @@
 {% if app.user %}
     <script>
         $(function() {
+
             var socket = io.connect('http://89.234.183.130:3000/');
+
+            $(document).ready(function() {
+
+                var joueur = {
+                    pseudo: '{{ app.user.pseudo }}'.trim()
+                };
+                if(joueur.pseudo.length > 0) {
+                    socket.emit('user-login', joueur)
+                }
+            });
+
             $('#form').submit(function(e) {
                 e.preventDefault();
                 var message = {
-                    text: $('#btn-input').val(),
-                    pseudo : '{{ app.user.pseudo }}'
-                }
+                    text: $('#btn-input').val()
+                };
+                $('#btn-input').focus();
+
+
                 socket.emit('message', message);
                 $('#btn-input').val('');
-                $('.partie-chat input').focus();
-            })
+            });
+
+            socket.on('service-message', function(message) {
+                $('.chat').append(' <li class="right clearfix">\n' +
+                    '                            <div class="chat-body clearfix">\n' +
+                    '                                <p style="color: #6495ED">\n' +
+                    message.text +
+                    '                                </p>\n' +
+                    '                            </div>\n' +
+                    '                        </li>');
+
+            });
+
             socket.on('message', function(message) {
                 $('.chat').append(' <li class="right clearfix">\n' +
                     '                            <div class="chat-body clearfix">\n' +
@@ -150,7 +175,9 @@
                     '                                </p>\n' +
                     '                            </div>\n' +
                     '                        </li>');
-            })
+
+            });
+
         })
     </script>
 {% endif %}

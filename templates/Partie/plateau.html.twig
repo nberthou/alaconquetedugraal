@@ -383,11 +383,21 @@
 
            });
 
+            {% if app.user.id != partie.tour.id %}
             $('.centrer').delay(500).fadeOut(function() {
                 $('.centrer').empty().load('{{ path('afficher_actions', {'id' : partie.id}) }} #tour', function() {
                     $('.centrer').fadeIn('slow');
                 })
             });
+            {% endif %}
+
+            {% if app.user.id == partie.tour.id %}
+            $('.centrer').delay(500).fadeOut(function() {
+                $('.centrer').empty().load('{{ path('afficher_actions', {'id' : partie.id}) }} #terrain', function() {
+                    $('.centrer').fadeIn('slow');
+                })
+            });
+            {% endif %}
 
              $('.annuler').on('click', function () {
                 console.log('Coucou');
